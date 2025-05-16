@@ -1,1 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
 
+    <style>
+        /* Basic styling for the body and main layout */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align items to the top */
+            min-height: 100vh;
+            /* Creative Background - Changed from green */
+            background: linear-gradient(to bottom right, #f0a7e9, #47a8bd); /* Light pink/purple to blue gradient */
+            font-family: 'Arial', sans-serif; /* A slightly more modern font */
+            padding: 20px; /* Increased padding around everything */
+            overflow-y: auto;
+            color: #333; /* Default text color */
+            gap: 20px; /* Space between presentation and controls */
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .presentation-container {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            text-align: center;
+            position: relative; /* Keep relative for notification positioning */
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid #47a8bd;
+            flex-grow: 1; /* Allow presentation to grow */
+        }
+
+        #slides-container {
+            width: 100%;
+            min-height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            text-align: left;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        .slide {
+            display: none;
+            animation: fadeIn 0.8s ease-in-out;
+            width: 100%;
+            padding: 15px;
+            box-sizing: border-box;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .slide.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .navigation-buttons {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .navigation-buttons button {
+            background-color: #007bff; /* Primary button color */
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            margin: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            flex-grow: 1;
+            max-width: 180px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .navigation-buttons button:hover {
+            background-color: #0056b3;
+        }
+         .navigation-buttons button:active {
+             transform: scale(0.98);
+         }
+        .navigation-buttons button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+        .slide-counter {
+            margin-top: 15px;
+            font-size: 1rem;
+            color: #555;
+            width: 100%;
+        }
+        .slide h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #007bff;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+        }
+        .slide p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            word-wrap: break-word;
+        }
+        .slide ul {
+            list-style: disc inside;
+            margin-left: 20px;
+            word-wrap: break-word;
+        }
+        .slide li {
+            margin-bottom: 8px;
+        }
+
+        /* Controls Container (outside presentation) */
+        #controls-container {
+            display: flex;
+            flex-direction: column; /* Stack controls vertically */
+            align-items: flex-start; /* Align items to the left */
+            gap: 20px; /* Increased space between control groups */
+            background: linear-gradient(to bottom, #e9ecef, #ced4da); /* Subtle grey gradient */
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #b0b0b0;
+            width: 250px; /* Fixed width for the controls sidebar */
+            flex-shrink: 0; /* Prevent shrinking */
+        }
+
+        /* Timer and Font Size Controls Styling (within the new container) */
+        #timer-controls, #font-size-controls {
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column; /* Stack elements vertically within controls */
+            align-items: flex-start; /* Align items to the left */
+            width: 100%; /* Take full width of parent */
+            gap: 8px; /* Smaller gap within control groups */
+            background-color: transparent; /* No background */
+            padding: 0;
+            border-radius: 0;
+            box-shadow: none;
+        }
+         #timer-controls label, #font-size-controls label {
+             margin-right: 0; /* Remove margin */
+             font-size: 1rem;
+             color: #333; /* Slightly darker label color */
+             font-weight: bold;
+         }
+         /* Style for the input and +/- buttons container */
+         .input-with-buttons {
+             display: flex;
+             align-items: center;
+             gap: 5px; /* Space between input and buttons */
+             width: 100%; /* Take full width */
+         }
+         .input-with-buttons input[type="number"] {
+             padding: 8px;
+             border: 1px solid #ccc;
+             border-radius: 4px;
+             flex-grow: 1; /* Input takes available space */
+             font-size: 1rem;
+             text-align: left;
+             /* Ensure input does not overflow */
+             min-width: 0; /* Allow input to shrink below content size */
+         }
+         .input-with-buttons button {
+             background-color: #007bff; /* Blue for +/- buttons */
+             color: white;
+             border: none;
+             padding: 4px 8px; /* Smaller padding for +/- buttons */
+             border-radius: 4px;
+             cursor: pointer;
+             font-size: 1rem;
+             transition: background-color 0.3s ease;
+             flex-shrink: 0; /* Prevent shrinking */
+         }
+         .input-with-buttons button:hover {
+             background-color: #0056b3; /* Darker blue on hover */
+         }
+
+         #timer-controls .input-with-buttons button {
+              background-color: #ffc107; /* Yellow/Orange for timer +/- buttons */
+              color: #333;
+         }
+         #timer-controls .input-with-buttons button:hover {
+              background-color: #ffa000; /* Darker yellow/orange */
+         }
+
+
+         #timer-controls > button { /* Style for the Apply Timer button */
+             background-color: #28a745; /* Green apply button */
+             color: white;
+             border: none;
+             padding: 8px 15px;
+             border-radius: 4px;
+             cursor: pointer;
+             font-size: 1rem;
+             transition: background-color 0.3s ease;
+             width: 100%; /* Button takes full width */
+             margin-top: 5px; /* Space above apply button */
+         }
+         #timer-controls > button:hover {
+             background-color: #218838;
+         }
+
+
+        #timer-display {
+            font-size: 1.4rem; /* Slightly larger timer font */
+            font-weight: bold;
+            color: #d9534f;
+            margin-bottom: 0; /* Remove margin */
+            min-height: 1.4em; /* Adjusted min-height */
+            width: 100%;
+            text-align: center; /* Center timer text */
+            padding-top: 15px; /* Add space above timer */
+            border-top: 1px solid #b0b0b0; /* Separator line */
+        }
+
+        /* Notification Styling */
+        #notification {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            /* Changed background from green */
+            background-color: rgba(255, 165, 0, 0.9); /* Orange background */
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            z-index: 1000;
+            display: none;
+            font-size: 1.2rem;
+            max-width: 95%;
+            box-sizing: border-box;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Answer and Explanation Area Styling */
+        .answer-area, .explanation-area {
+            margin-top: 15px; /* Adjusted margin top */
+            padding: 15px;
+            border: 2px dashed #007bff;
+            border-radius: 8px;
+            background-color: #e9f5ff;
+            display: none;
+            text-align: left; /* Align text left */
+            word-wrap: break-word;
+            font-size: 1.1rem;
+        }
+        .answer-area strong, .explanation-area strong {
+            color: #0056b3;
+        }
+        .explanation-area {
+             border-style: solid; /* Solid border for explanation */
+             border-color: #47a8bd; /* Blue border */
+             background-color: #e0f7fa; /* Lighter blue background */
+        }
+
+
+        /* Reading Passage Styling */
+        .reading-passage {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px dashed #47a8bd;
+            border-radius: 8px;
+            /* Changed background from light green */
+            background-color: #fff3cd; /* Light yellow background */
+            font-style: italic;
+            text-align: left;
+            word-wrap: break-word;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Button Group for Answer and Explanation */
+        .answer-explanation-buttons {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px; /* Space between buttons */
+            flex-wrap: wrap;
+        }
+         .answer-explanation-buttons button {
+             background-color: #007bff;
+             color: white;
+             border: none;
+             padding: 8px 15px;
+             border-radius: 5px;
+             cursor: pointer;
+             font-size: 1rem;
+             transition: background-color 0.3s ease;
+         }
+          .answer-explanation-buttons button:hover {
+              background-color: #0056b3;
+          }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) { /* Adjust breakpoint for sidebar */
+             body {
+                 flex-direction: column; /* Stack presentation and controls */
+                 align-items: center; /* Center stacked items */
+                 gap: 20px;
+             }
+             #controls-container {
+                 width: 100%; /* Controls take full width */
+                 max-width: 500px; /* Limit max width when stacked */
+                 flex-direction: row; /* Arrange controls horizontally */
+                 justify-content: space-around; /* Distribute space */
+                 align-items: center;
+                 padding: 15px;
+             }
+             #timer-controls, #font-size-controls {
+                 flex-direction: row; /* Arrange elements horizontally */
+                 align-items: center;
+                 width: auto; /* Auto width */
+                 gap: 8px;
+             }
+             #timer-controls label, #font-size-controls label {
+                 margin-right: 5px;
+             }
+             .input-with-buttons input[type="number"] {
+                 width: 50px; /* Adjusted width */
+                 text-align: center;
+             }
+              #timer-display {
+                  text-align: center; /* Center timer text */
+                  padding-top: 0; /* Remove padding */
+                  border-top: none; /* Remove border */
+              }
+              #timer-controls > button { /* Apply button when stacked */
+                  width: auto; /* Auto width */
+                  margin-top: 0;
+              }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            .presentation-container {
+                padding: 15px;
+            }
+            #slides-container {
+                 padding: 0 5px;
+            }
+            .slide {
+                padding: 10px;
+            }
+            .navigation-buttons {
+                gap: 10px;
+            }
+            .navigation-buttons button {
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+            .slide h2 {
+                font-size: 1.4rem;
+            }
+             #timer-display {
+                 font-size: 1.2rem;
+             }
+             #controls-container {
+                 padding: 10px;
+                 gap: 10px;
+             }
+             #timer-controls, #font-size-controls {
+                 gap: 5px;
+             }
+             #timer-controls label,
+             #font-size-controls label {
+                 margin-right: 5px; /* Keep a small margin */
+             }
+             .input-with-buttons input[type="number"] {
+                 width: 40px; /* Further adjusted width */
+             }
+             .input-with-buttons button {
+                 padding: 3px 6px; /* Smaller padding for +/- buttons */
+                 font-size: 0.9rem;
+             }
+
+             #notification {
+                 width: 95%;
+                 padding: 10px 15px;
+                 font-size: 1rem;
+             }
+             .slide ul {
+                 margin-left: 15px;
+             }
+             .reading-passage {
+                 padding: 15px;
+             }
+             .answer-area, .explanation-area {
+                 padding: 10px;
+                 font-size: 1rem;
+             }
+             .answer-explanation-buttons {
+                 gap: 8px;
+             }
+        }
+    </style>
+</head>
+<body>
+    <div id="controls-container">
+        <div id="timer-controls">
+            <label for="timer-duration">Set Timer (s):</label>
+            <div class="input-with-buttons">
+                <button id="timer-minus">-</button>
+                <input type="number" id="timer-duration" value="60" min="10">
+                <button id="timer-plus">+</button>
+            </div>
+            <button id="apply-timer">Apply</button>
+        </div>
+         <div id="font-size-controls">
+             <label for="font-size">Font Size (px):</label>
+              <div class="input-with-buttons">
+                 <button id="font-size-minus">-</button>
+                 <input type="number" id="font-size" value="16" min="10" max="30">
+                 <button id="font-size-plus">+</button>
+             </div>
+         </div>
+         <div id="timer-display"></div>
+    </div>
+
+    <div class="presentation-container">
+         <div id="notification"></div>
+
+        <div id="slides-container">
+            </div>
+        <div class="navigation-buttons">
+            <button id="prev-btn" disabled>Previous</button>
+            <button id="next-btn">Next</button>
+        </div>
+        <div id="slide-counter" class="slide-counter"></div>
+    </div>
+
+    <script>
+        // Define the reading passage content separately
+        const readingPassageContent = `"The old library was a quiet place. Students _____ (6) study there for hours without interruption. The librarian, Mrs. Gable, was a kind woman _____ (7) always had a smile. She encouraged everyone _____ (8) different kinds of books."`;
+
+
+        // Data extracted from the markdown content, structured into slides
+        // Using backticks for content strings to avoid issues with internal quotes
+        // Added 'answer' property for multiple choice questions
+        const slidesData = [
+            { title: "7th Grade English Exam Review Questions (ESL Focus - Variation 2)", content: `Here is a review for your final exam. Let's practice together and make sure that you answer it correctly.` },
+            { title: "Part A: Multiple Choice Practice", content: `Choose the best answer for each question. Focus on understanding the grammar rules and choosing the correct word or form for the context.` },
+            // New Topic Discussion Slides
+            { title: "Topic: Used To (Past Habits)", content: `We use "used to" + the base form of a verb to talk about habits or states that were true in the past but are not true now.\n\nExamples:\n- I used to play soccer every day. (But I don't anymore)\n- She used to have long hair. (But now her hair is short)\n\nNegative form: didn't use to\n- I didn't use to like vegetables.\n\nQuestion form: Did you use to...?\n- Did you use to live in a different city?`},
+            { title: "Topic: Verb Forms After Verbs", content: `Some verbs are followed by the "-ing" form (gerund), and some are followed by "to" + the base verb (infinitive).\n\nExamples:\n- Enjoy + -ing: They enjoy playing soccer.\n- Avoid + -ing: He tries to avoid eating fast food.\n- Advise + to + verb: The doctor advised her to drink more water.\n- Encourage + to + verb: She encouraged everyone to read.`},
+            { title: "Topic: Relative Pronouns", content: `Relative pronouns connect clauses and give more information about a noun.\n\n- Who: for people (The woman who lives next door is friendly.)\n- Which: for things (The book which is on the table is interesting.)\n- Where: for places (This is the park where we met.)\n- When: for times (I remember the day when we graduated.)`},
+            { title: "Topic: Prepositions of Place", content: `Prepositions like in, at, and on tell us about location.\n\n- In: for enclosed spaces, cities, countries (in a room, in Paris, in France)\n- At: for specific points or locations (at the bus stop, at the door, at the party)\n- On: for surfaces, streets, floors (on the table, on Main Street, on the second floor)`},
+            { title: "Topic: Adverbs", content: `Adverbs describe verbs, adjectives, or other adverbs. Many adverbs of manner end in -ly.\n\nExamples:\n- Speak quietly (describes how someone speaks)\n- Chop neatly (describes how to chop)\n- Develop clearly (describes how to develop arguments)\n- Move smoothly (describes how to move)\n- Painted carefully (describes how the artist painted)`},
+             { title: "Topic: Modal Verbs (Could, May)", content: `Modal verbs add extra meaning to the main verb.\n\n- Could: Can be used for past ability (Students could study there for hours) or possibility (It could rain tomorrow).\n- May: Used to express possibility (It may rain tomorrow) or ask for permission (May I come in?).`},
+             { title: "Topic: Past Tenses Review", content: `We use different past tenses to talk about actions in the past.\n\n- Simple Past: Completed actions in the past (The phone rang.)\n- Past Continuous: Action in progress at a specific time in the past, often interrupted by another action (While I was cooking dinner, the phone rang.)\n- Past Perfect Continuous: Action that continued up to a specific point in the past (They had been waiting for an hour when the bus arrived.)`},
+             { title: "Topic: Expressing Purpose", content: `We often use "to" + the base verb to explain the reason or purpose of an action.\n\nExamples:\n- He paused to take a sip of water. (Why did he pause? To take a sip.)\n- She went to the store to buy some milk. (Why did she go? To buy milk.)`},
+
+            // Multiple Choice Questions start here
+            { title: "Question 1", content: `Which option correctly completes the sentence about a past habit that is no longer true?\n"When I was younger, I _____ play outside every day after school, but now I have too much homework."\na) am used to\nb) used to\nc) use to\nd) was using to`, answer: "b) used to", explanation: "The phrase 'used to' is used to talk about something that happened regularly in the past but does not happen now. Option (a) 'am using' is present continuous, (c) 'used' is simple past but needs 'to' for this meaning, and (d) 'using' is a gerund or present participle." },
+            { title: "Question 2", content: `Choose the correct verb form to follow "advised":\n"She told him _________ harder."\na) to study\nb) for study\nc) to studying\nd) studying for`, answer: "a) to study", explanation: "The verb 'tell' when giving advice is typically followed by the infinitive form (to + base verb). The structure is 'tell someone to do something'." },
+            { title: "Question 3", content: `Which word correctly follows "enjoy" to describe an action?\n"They enjoy _____ soccer on weekends because it's fun to exercise and be with friends."\na) play\nb) to play\nc) playing\nd) played`, answer: "c) playing", explanation: "The verb 'enjoy' is followed by the gerund form of a verb (-ing form). Other verbs followed by gerunds include 'like', 'love', 'hate', 'finish', 'mind', etc." },
+            { title: "Question 4", content: `Choose the correct word to introduce a clause that gives extra information about "the park":\n"The park, _____ we often have picnics, is closed for renovations."\na) who\nb) which\nc) where\nd) when`, answer: "c) where", explanation: "The relative pronoun 'where' is used to refer to a place. 'Who' is for people, 'which' is for things, and 'when' is for time." },
+            { title: "Question 5", content: `Which preposition best completes the sentence about the location of the keys?\n"I left my keys _____ the kitchen counter."\na) in\nb) at\nc) on\nd) to`, answer: "c) on", explanation: "We use the preposition 'on' to indicate something is on a surface, such as a counter or table." },
+            // Reading passage questions will now include the passage content
+            { title: "Question 6", content: `Which modal verb shows a past ability or typical action?\na) can\nb) will\nc) could\nd) shall`, answer: "c) could", requiresPassage: true, explanation: "The modal verb 'could' is used to express ability in the past. 'Can' is for present ability, 'will' for future, and 'shall' is often used for suggestions or formal future statements." },
+            { title: "Question 7", content: `Which word correctly refers to "Mrs. Gable" and introduces information about her?\na) which\nb) where\nc) when\nd) who`, answer: "d) who", requiresPassage: true, explanation: "The relative pronoun 'who' is used to refer to people. Mrs. Gable is a person." },
+            { title: "Question 8", content: `Choose the correct verb form after "encouraged everyone":\na) read\nb) reading\nc) to read\nd) reads`, answer: "c) to read", requiresPassage: true, explanation: "The verb 'encourage' is followed by the infinitive form (to + base verb). The structure is 'encourage someone to do something'." },
+            { title: "Question 9", content: `Which adverb best describes how someone speaks quietly?\n"She spoke _____ so that no one else would hear."\na) quiet\nb) quietly\nc) more quiet\nd) quietest`, answer: "b) quietly", explanation: "Adverbs often end in '-ly' and describe how an action is done. 'Quietly' describes the manner of speaking." },
+            { title: "Question 10", content: `Choose the correct phrase to express the reason for pausing:\n"He paused _____ a sip of water before continuing his speech."\na) taking\nb) to take\nc) for taking\nd) take`, answer: "b) to take", explanation: "We use 'to' + the base verb to express the purpose of an action. He paused *for the purpose of* taking a sip." },
+            { title: "Question 11", content: `Which modal verb suggests a possibility?\n"It _____ rain tomorrow, so you should take an umbrella."\na) must\nb) will\nc) may\nd) should`, answer: "c) may", explanation: "The modal verb 'may' is used to express possibility. 'Must' indicates necessity, 'will' indicates future certainty, and 'should' indicates recommendation." },
+            { title: "Question 12", content: `Choose the correct verb forms to describe an action that was happening when another action occurred:\n"While I _____ dinner, the phone suddenly _____."\na) was cooking / rang\nb) cooked / was ringing\nc) had cooked / rings\nd) am cooking / rang`, answer: "a) was cooking / rang", explanation: "The past continuous ('was cooking') is used for an action in progress in the past that was interrupted by a shorter, completed action in the simple past ('rang')." },
+            { title: "Question 13", content: `Which sentence correctly uses the past perfect continuous tense?\na) They had been waiting for an hour when the bus finally arrived.\nb) They were waiting for an hour when the bus finally arrived.\nc) They waited for an hour when the bus finally arrived.\nd) They have been waiting for an hour when the bus finally arrived.`, answer: "a) They had been waiting for an hour when the bus finally arrived.", explanation: "The past perfect continuous ('had been waiting') is used for an action that started in the past and continued up to another point in the past ('when the bus arrived')." },
+            { title: "Question 14", content: `Which adverb best describes how the artist painted the details.\n"The artist painted the tiny details on the canvas very _____."\na) careful\nb) carefully\nc) more careful\nd) carelessness`, answer: "b) carefully", explanation: "The adverb 'carefully' describes the verb 'painted', indicating how the action was performed." },
+            { title: "Question 15", content: `Which relative pronoun is used to refer to a place?\n"This is the restaurant _____ we first met."\na) who\nb) which\nc) where\nd) when`, answer: "c) where", explanation: "The relative pronoun 'where' is used to refer to a place ('the restaurant')." },
+            { title: "Part B: Essay and Grammar Practice", content: `Answer the following questions in complete sentences. Focus on using correct grammar and clear expression.` },
+            { title: "Topic: Writing About Your Hobby", content: `When writing about your favorite hobby, think about:\n- What is it?\n- How often do you do it?\n- Why do you enjoy it? (What feelings or benefits does it give you?)\n- How did you start doing it?\n- What do you need to do it?`},
+             { title: "Topic: Writing About Travel", content: `If you could travel anywhere, consider:\n- Where would you go? (A specific city, country, or type of place?)\n- Why that place? (What is interesting or special about it?)\n- What would you do there? (Visit landmarks, try food, meet people?)\n- Who would you go with? (Optional)`},
+             { title: "Topic: Writing a Short Story", content: `For a short story, think about:\n- Characters: Who is the story about?\n- Setting: Where and when does it happen?\n- Plot: What happens? (Beginning, middle, end)\n- An unexpected adventure: What is surprising or unusual about the event?`},
+             { title: "Topic: Adjectives", content: `Adjectives are words that describe nouns (people, places, things, ideas).\n\nExamples:\n- A **beautiful** flower (describes the noun "flower")\n- A **tall** building (describes the noun "building")\n- An **interesting** book (describes the noun "book")\n\nThey tell us more about the noun's qualities.`},
+             { title: "Topic: Writing Sentences with 'Used To'", content: `Remember the forms:\n- Positive: Subject + used to + base verb (I used to play.)\n- Negative: Subject + didn't use to + base verb (She didn't use to like it.)\n- Question: Did + subject + use to + base verb? (Did you use to go there?)`},
+
+            { title: "End of Review", content: `Keep practicing these different types of questions and topics to improve your English skills! Good luck with your exam!` }
+        ];
+
+        const slidesContainer = document.getElementById('slides-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const slideCounter = document.getElementById('slide-counter');
+        const timerDisplay = document.getElementById('timer-display');
+        const timerDurationInput = document.getElementById('timer-duration');
+        const applyTimerBtn = document.getElementById('apply-timer');
+        const notificationDiv = document.getElementById('notification');
+        const fontSizeInput = document.getElementById('font-size');
+
+        // Get the new +/- buttons
+        const timerMinusBtn = document.getElementById('timer-minus');
+        const timerPlusBtn = document.getElementById('timer-plus');
+        const fontSizeMinusBtn = document.getElementById('font-size-minus');
+        const fontSizePlusBtn = document.getElementById('font-size-plus');
+
+
+        let currentSlideIndex = 0;
+
+        let timerInterval;
+        let QUESTION_TIMER_DURATION = parseInt(timerDurationInput.value);
+        let timeRemaining = QUESTION_TIMER_DURATION;
+
+        // Tone.js setup
+        const synth = new Tone.Synth().toDestination();
+
+        // Function to convert simple markdown-like text to HTML
+        function formatContent(text) {
+            let html = text.replace(/\n/g, '<br>'); // Replace newlines with <br>
+            html = html.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold
+
+            const lines = html.split('<br>');
+            let formattedLines = [];
+            let inList = false;
+
+            for (const line of lines) {
+                const trimmedLine = line.trim();
+
+                // Check for list items starting with - or *
+                if (/^[-*]\s/.test(trimmedLine)) {
+                     if (!inList) {
+                        formattedLines.push('<ul>');
+                        inList = true;
+                    }
+                    formattedLines.push(`<li>${trimmedLine.substring(1).trim()}</li>`); // Remove the list marker
+                }
+                // Check for multiple choice options (a), b), c), d))
+                else if (/^[a-d]\)/.test(trimmedLine)) {
+                    if (!inList) {
+                        formattedLines.push('<ul>');
+                        inList = true;
+                    }
+                    formattedLines.push(`<li>${trimmedLine}</li>`);
+                }
+                 // Check for Part B numbered questions (1., 2., etc.)
+                else if (/^\d+\./.test(trimmedLine)) {
+                     if (!inList) {
+                        formattedLines.push('<ul>');
+                        inList = true;
+                    }
+                    formattedLines.push(`<li>${trimmedLine}</li>`);
+                }
+                else {
+                    if (inList) {
+                        formattedLines.push('</ul>');
+                        inList = false;
+                    }
+                    formattedLines.push(`<p>${line}</p>`);
+                }
+            }
+
+            if (inList) {
+                formattedLines.push('</ul>');
+            }
+
+            return formattedLines.join('');
+        }
+
+        // Function to show a notification
+        function showNotification(message, duration = 2000) {
+            notificationDiv.textContent = message;
+            notificationDiv.style.display = 'block';
+            setTimeout(() => {
+                notificationDiv.style.display = 'none';
+            }, duration);
+        }
+
+
+        // Function to start the timer
+        function startTimer() {
+            timeRemaining = QUESTION_TIMER_DURATION;
+            timerDisplay.textContent = `Time: ${timeRemaining}s`;
+            timerDisplay.style.color = '#d9534f'; // Timer color
+
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                timerDisplay.textContent = `Time: ${timeRemaining}s`;
+
+                if (timeRemaining <= 10 && timeRemaining > 0) {
+                    timerDisplay.style.color = '#d9534f'; // Red
+                    // Play a warning sound
+                    // Synth must be started by a user gesture before it can make sound.
+                    // Check if context is running before playing.
+                    if (Tone.context.state !== 'running') {
+                        Tone.start();
+                    }
+                    synth.triggerAttackRelease('C4', '8n'); // Example: C4 note for 1/8th note duration
+                    if (timeRemaining === 10) {
+                         showNotification("10 seconds remaining!");
+                    }
+
+                } else if (timeRemaining === 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "Time's up!";
+                    timerDisplay.style.color = '#d9534f'; // Keep red
+                    // Play a "time up" sound
+                     if (Tone.context.state !== 'running') {
+                        Tone.start();
+                    }
+                     synth.triggerAttackRelease('C3', '4n'); // Example: lower C3 note for 1/4 note duration
+                     showNotification("Time's up!");
+                    // Optionally, automatically move to the next slide or show an alert
+                    /* Removed auto-advance to prevent unexpected navigation
+                    nextBtn.click();
+                    */
+                }
+                 else {
+                     timerDisplay.style.color = '#333'; // Default color
+                 }
+            }, 1000);
+        }
+
+        // Function to stop the timer
+        function stopTimer() {
+            clearInterval(timerInterval);
+            timerDisplay.textContent = '';
+            timerDisplay.style.color = '#333';
+            notificationDiv.style.display = 'none'; // Hide notification when timer stops
+        }
+
+        // Function to apply the new timer duration
+        function applyNewTimerDuration() {
+            const newDuration = parseInt(timerDurationInput.value);
+            if (!isNaN(newDuration) && newDuration >= parseInt(timerDurationInput.min)) { // Check against min attribute
+                QUESTION_TIMER_DURATION = newDuration;
+                if (slidesData[currentSlideIndex].title.startsWith('Question') || slidesData[currentSlideIndex].title.startsWith('Part B - Question')) {
+                    stopTimer();
+                    startTimer();
+                }
+            } else {
+                alert(`Please enter a valid number for the timer duration (minimum ${timerDurationInput.min} seconds).`);
+                 timerDurationInput.value = QUESTION_TIMER_DURATION;
+            }
+        }
+
+        // Function to apply the new font size
+        function applyNewFontSize() {
+            const newSize = parseInt(fontSizeInput.value);
+            const minSize = parseInt(fontSizeInput.min);
+            const maxSize = parseInt(fontSizeInput.max);
+
+            if (!isNaN(newSize) && newSize >= minSize && newSize <= maxSize) { // Check against min/max attributes
+                // Apply font size to the content div within the active slide
+                const activeSlideContent = slidesContainer.querySelector('.slide.active .slide-content'); // Target the specific content div
+                if (activeSlideContent) {
+                     activeSlideContent.style.fontSize = `${newSize}px`;
+                     // Also adjust line height slightly for better readability with larger fonts
+                     activeSlideContent.style.lineHeight = `${newSize * 1.5}px`;
+                }
+                 // Also apply to reading passage if present
+                const activeReadingPassage = slidesContainer.querySelector('.slide.active .reading-passage');
+                 if (activeReadingPassage) {
+                     activeReadingPassage.style.fontSize = `${newSize}px`;
+                     activeReadingPassage.style.lineHeight = `${newSize * 1.5}px`;
+                 }
+
+            } else {
+                 alert(`Please enter a valid font size between ${minSize} and ${maxSize}.`);
+                 fontSizeInput.value = 16; // Reset to default if invalid
+                 const activeSlideContent = slidesContainer.querySelector('.slide.active .slide-content');
+                  if (activeSlideContent) {
+                     activeSlideContent.style.fontSize = `16px`; // Apply default size
+                     activeSlideContent.style.lineHeight = `24px`; // Default line height
+                 }
+                 const activeReadingPassage = slidesContainer.querySelector('.slide.active .reading-passage');
+                  if (activeReadingPassage) {
+                     activeReadingPassage.style.fontSize = `16px`;
+                     activeReadingPassage.style.lineHeight = `24px`;
+                 }
+            }
+        }
+
+        // Function to increment/decrement input values
+        function adjustInputValue(inputElement, amount) {
+            let currentValue = parseInt(inputElement.value);
+            if (isNaN(currentValue)) {
+                currentValue = 0; // Start from 0 if current value is not a number
+            }
+            const minValue = parseInt(inputElement.min) || -Infinity; // Get min attribute or no min
+            const maxSize = parseInt(inputElement.max) || Infinity; // Get max attribute or no max
+
+            let newValue = currentValue + amount;
+
+            // Clamp the new value within min/max bounds
+            newValue = Math.max(minValue, Math.min(newValue, maxSize));
+
+            inputElement.value = newValue;
+
+            // Trigger apply function based on which input was adjusted
+            if (inputElement.id === 'timer-duration') {
+                applyNewTimerDuration();
+            } else if (inputElement.id === 'font-size') {
+                applyNewFontSize();
+            }
+        }
+
+
+        function renderSlide(index) {
+            stopTimer();
+
+            slidesContainer.innerHTML = '';
+            const slide = slidesData[index];
+            const slideElement = document.createElement('div');
+            slideElement.classList.add('slide');
+            slideElement.classList.add('active');
+
+            slideElement.innerHTML = `<h2>${slide.title}</h2>`;
+
+            // Add reading passage if required
+            if (slide.requiresPassage) {
+                const passageDiv = document.createElement('div');
+                passageDiv.classList.add('reading-passage');
+                passageDiv.innerHTML = formatContent(readingPassageContent); // Use formatContent for the passage
+                slideElement.appendChild(passageDiv);
+            }
+
+
+            // Create content div to apply font size to
+            const contentDiv = document.createElement('div');
+            contentDiv.classList.add('slide-content'); // Add a class to easily target
+            contentDiv.innerHTML = formatContent(slide.content); // Format content into the div
+            slideElement.appendChild(contentDiv); // Append content div to slide element
+
+
+            // Add Show Answer and Show Explanation buttons and areas for multiple choice questions
+            if (slide.answer || slide.explanation) { // Check if either answer or explanation exists
+                 const buttonGroup = document.createElement('div');
+                 buttonGroup.classList.add('answer-explanation-buttons');
+
+                 if (slide.answer) {
+                    const showAnswerBtn = document.createElement('button');
+                    showAnswerBtn.textContent = 'Show Answer';
+                    // Using basic classes for now, can add more Tailwind later if needed
+                    showAnswerBtn.classList.add('bg-blue-500', 'hover:bg-blue-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
+
+                    const answerArea = document.createElement('div');
+                    answerArea.classList.add('answer-area');
+                    answerArea.innerHTML = `<strong>Answer:</strong> ${slide.answer}`;
+
+                    buttonGroup.appendChild(showAnswerBtn);
+                    slideElement.appendChild(answerArea); // Append areas directly to slideElement
+
+                    showAnswerBtn.addEventListener('click', () => {
+                        answerArea.style.display = 'block';
+                        showAnswerBtn.style.display = 'none';
+                    });
+                 }
+
+                 if (slide.explanation) {
+                    const showExplanationBtn = document.createElement('button');
+                    showExplanationBtn.textContent = 'Show Explanation';
+                     // Using basic classes for now
+                    showExplanationBtn.classList.add('bg-purple-500', 'hover:bg-purple-700', 'text-white', 'font-bold', 'py-2', 'px-4', 'rounded');
+
+
+                    const explanationArea = document.createElement('div');
+                    explanationArea.classList.add('explanation-area');
+                    explanationArea.innerHTML = `<strong>Explanation:</strong> ${slide.explanation}`;
+
+                    buttonGroup.appendChild(showExplanationBtn);
+                    slideElement.appendChild(explanationArea); // Append areas directly to slideElement
+
+
+                    showExplanationBtn.addEventListener('click', () => {
+                        explanationArea.style.display = 'block';
+                        showExplanationBtn.style.display = 'none';
+                    });
+                 }
+
+                 slideElement.appendChild(buttonGroup); // Append the button group to the slide
+            }
+
+
+            slidesContainer.appendChild(slideElement);
+
+            // Apply current font size after rendering the slide content
+            applyNewFontSize();
+
+
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === slidesData.length - 1;
+
+            slideCounter.textContent = `Slide ${index + 1} of ${slidesData.length}`;
+
+            /*
+            // Start timer only on slides that are questions (Part A or Part B questions)
+            if (slide.title.startsWith('Question') || slide.title.startsWith('Part B - Question')) {
+                startTimer();
+            } else {
+                 stopTimer();
+            }
+            */
+            // Timer should only start if the slide requires it AND the timer duration is set
+            if ((slide.title.startsWith('Question') || slide.title.startsWith('Part B - Question')) && QUESTION_TIMER_DURATION > 0) {
+                 startTimer();
+             } else {
+                 stopTimer();
+             }
+
+
+             console.log(`Rendering slide ${index}. Title: "${slide.title}". Total slides: ${slidesData.length}`);
+        }
+
+        // Initial render
+        renderSlide(currentSlideIndex);
+
+        // Event listeners for navigation
+        nextBtn.addEventListener('click', () => {
+            console.log("Next button clicked.");
+            if (currentSlideIndex < slidesData.length - 1) {
+                currentSlideIndex++;
+                console.log(`New slide index: ${currentSlideIndex}`);
+                renderSlide(currentSlideIndex);
+            } else {
+                console.log("Already on the last slide.");
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+             console.log("Previous button clicked.");
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                 console.log(`New slide index: ${currentSlideIndex}`);
+                renderSlide(currentSlideIndex);
+            } else {
+                 console.log("Already on the first slide.");
+            }
+        });
+
+        // Event listener for the apply timer button
+        applyTimerBtn.addEventListener('click', applyNewTimerDuration);
+
+        // Event listener for the font size input (change event for real-time update)
+        fontSizeInput.addEventListener('change', applyNewFontSize);
+         // Also apply on input for a more real-time feel as user types
+        fontSizeInput.addEventListener('input', applyNewFontSize);
+
+
+        // Add event listeners for the new +/- buttons
+        timerMinusBtn.addEventListener('click', () => adjustInputValue(timerDurationInput, -1));
+        timerPlusBtn.addEventListener('click', () => adjustInputValue(timerDurationInput, 1));
+        fontSizeMinusBtn.addEventListener('click', () => adjustInputValue(fontSizeInput, -1));
+        fontSizePlusBtn.addEventListener('click', () => adjustInputValue(fontSizeInput, 1));
+
+
+        // Optional: Allow pressing Enter key in the timer input field to apply
+        timerDurationInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyNewTimerDuration();
+            }
+        });
+
+         // Optional: Allow pressing Enter key in the font size input field to apply
+         fontSizeInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyNewFontSize();
+            }
+        });
+
+        // Add a click listener to the document body to start the Tone.js audio context
+        // This is necessary because browsers require user interaction to start audio.
+        document.body.addEventListener('click', () => {
+            if (Tone.context.state !== 'running') {
+                Tone.start();
+                console.log('Tone.js audio context started.');
+            }
+        });
+
+        // Add keydown event listener for arrow keys
+        document.addEventListener('keydown', (event) => {
+            // Check if the focus is NOT on an input field before navigating
+            if (event.target.tagName !== 'INPUT') {
+                if (event.key === 'ArrowRight') {
+                    nextBtn.click(); // Simulate click on next button
+                } else if (event.key === 'ArrowLeft') {
+                    prevBtn.click(); // Simulate click on previous button
+                }
+            }
+        });
+
+
+    </script>
+</body>
+</html>
