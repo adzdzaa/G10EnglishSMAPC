@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>X Alfa Class - Mr. Adz Dzaa</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+    <style>
+        /* Custom font for branding */
+        .font-pacifico {
+            font-family: 'Pacifico', cursive;
+        }
+        /* Default font for body */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Smooth scroll behavior (for any on-page links if added later) */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Additional style for mobile menu transition */
+        #mobile-menu {
+            transition: transform 0.3s ease-in-out;
+        }
+        /* Basic styling for the main content area */
+        .main-content {
+            padding-top: 6rem; /* Adjust based on navbar height, pt-24 is 6rem */
+            min-height: calc(100vh - 4rem); /* Full height minus footer (approx) */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .main-content {
+                padding-top: 5rem; /* Adjust based on navbar height, pt-20 is 5rem */
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
 
+    <nav class="bg-white shadow-md fixed w-full z-20 top-0">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="font-pacifico text-3xl text-teal-600">Mr. Adz Dzaa</a>
+                <div class="hidden md:flex space-x-4">
+                    <a href="index.html#home" class="text-gray-600 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Home</a>
+                    <a href="index.html#about" class="text-gray-600 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">About Me</a>
+                    <a href="index.html#classes" class="text-gray-600 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Class Portals</a>
+                    <a href="index.html#contact" class="text-gray-600 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Contact</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-teal-500 focus:outline-none focus:text-teal-500">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="md:hidden hidden flex-col space-y-1 pt-2 pb-3">
+                 <a href="index.html#home" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Home</a>
+                <a href="index.html#about" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">About Me</a>
+                <a href="index.html#classes" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Class Portals</a>
+                <a href="index.html#contact" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main id="x-alfa-content" class="main-content container mx-auto px-6 py-8">
+        <h1 class="text-3xl md:text-4xl font-bold text-teal-600 mb-8">X Alfa Class Portal</h1>
+        
+        <div class="bg-white p-8 rounded-xl shadow-lg">
+            <p class="text-gray-700">
+                Welcome to the X Alfa class page. Content for this page will be added soon.
+            </p>
+            <div id="class-specific-content-placeholder" class="mt-6">
+                </div>
+        </div>
+        
+    </main>
+
+    <footer class="bg-gray-800 text-gray-300 py-8 text-center mt-12">
+        <div class="container mx-auto px-6">
+            <p>&copy; <span id="currentYear"></span> Mr. Adz Dzaa - SMA Pelita Cemerlang. All rights reserved.</p>
+            <p class="text-sm mt-1">
+                <a href="index.html" class="hover:text-teal-400 transition duration-300">Back to Main Portal</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileMenuButton && mobileMenu) { // Check if elements exist
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('flex'); // Use flex for vertical layout
+            });
+
+            // Close mobile menu after clicking a link (if mobile menu is open)
+            const mobileNavLinks = mobileMenu.querySelectorAll('a');
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.classList.remove('flex');
+                    }
+                });
+            });
+        }
+
+
+        // Set current year in footer
+        const currentYearElement = document.getElementById('currentYear');
+        if (currentYearElement) { // Check if element exists
+            currentYearElement.textContent = new Date().getFullYear();
+        }
+
+        // Note: The smooth scroll script from the main page is for on-page anchors.
+        // Since these nav links point to a different page (index.html#section),
+        // the browser will handle the jump. If you add on-page anchors to this
+        // xalfa.html page later, you can re-include the smooth scroll logic here.
+    </script>
+
+</body>
+</html>
