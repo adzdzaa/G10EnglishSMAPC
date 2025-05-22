@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>X Beta Class - Mr. Adz Dzaa</title>
+    <title>X Beta Class - Mr. Adza</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Pacifico&display=swap" rel="stylesheet">
     <style>
@@ -15,23 +15,58 @@
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Smooth scroll behavior (for any on-page links if added later) */
+        /* Smooth scroll behavior */
         html {
             scroll-behavior: smooth;
         }
-        /* Additional style for mobile menu transition */
+        /* Mobile menu transition */
         #mobile-menu {
             transition: transform 0.3s ease-in-out;
         }
-        /* Basic styling for the main content area */
+        /* Main content area styling */
         .main-content {
-            padding-top: 6rem; /* Adjust based on navbar height, pt-24 is 6rem */
-            min-height: calc(100vh - 4rem); /* Full height minus footer (approx) */
+            padding-top: 6rem; /* pt-24 */
+            min-height: calc(100vh - 8rem); 
         }
         @media (min-width: 768px) { /* md breakpoint */
             .main-content {
-                padding-top: 5rem; /* Adjust based on navbar height, pt-20 is 5rem */
+                padding-top: 5rem; /* pt-20 */
             }
+        }
+        /* Tab styling */
+        .tab-button {
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+        .tab-button.active {
+            background-color: #0891B2; /* cyan-600 for X Beta active tab */
+            color: white;
+            border-color: #0891B2; /* cyan-600 */
+        }
+        .tab-button:not(.active):hover {
+            background-color: #E0F2FE; /* cyan-50 */
+            color: #0891B2; /* cyan-600 */
+            border-color: #A5F3FC; /* cyan-200 */
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* Custom list style for criteria */
+        .criterion-item {
+            padding: 0.75rem; /* p-3 */
+            border: 1px solid #E5E7EB; /* border-gray-200 */
+            border-radius: 0.5rem; /* rounded-lg */
+            background-color: #F9FAFB; /* bg-gray-50 */
+        }
+        .criterion-item:not(:last-child) {
+            margin-bottom: 1rem; /* space-y-4 equivalent */
         }
     </style>
 </head>
@@ -40,11 +75,11 @@
     <nav class="bg-white shadow-md fixed w-full z-20 top-0">
         <div class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
-                <a href="index.html" class="font-pacifico text-3xl text-teal-600">Mr. Adz Dzaa</a>
+                <a href="index.html" class="font-pacifico text-3xl text-teal-600">Mr. Adza</a>
                 <div class="hidden md:flex space-x-4">
                     <a href="index.html#home" class="text-gray-600 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Home</a>
                     <a href="index.html#about" class="text-gray-600 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">About Me</a>
-                    <a href="index.html#classes" class="text-gray-600 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Class Portals</a>
+                    <a href="index.html#experience" class="text-gray-600 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Teaching Portfolio</a>
                     <a href="index.html#contact" class="text-gray-600 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Contact</a>
                 </div>
                 <div class="md:hidden">
@@ -56,30 +91,222 @@
                 </div>
             </div>
             <div id="mobile-menu" class="md:hidden hidden flex-col space-y-1 pt-2 pb-3">
-                 <a href="index.html#home" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Home</a>
+                <a href="index.html#home" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Home</a>
                 <a href="index.html#about" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">About Me</a>
-                <a href="index.html#classes" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Class Portals</a>
+                <a href="index.html#experience" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Teaching Portfolio</a>
                 <a href="index.html#contact" class="block text-gray-600 hover:bg-teal-50 hover:text-teal-500 transition duration-300 px-3 py-2 rounded-md">Contact</a>
             </div>
         </div>
     </nav>
 
-    <main id="x-beta-content" class="main-content container mx-auto px-6 py-8">
-        <h1 class="text-3xl md:text-4xl font-bold text-cyan-600 mb-8">X Beta Class Portal</h1>
+    <main id="x-beta-content" class="main-content container mx-auto px-4 sm:px-6 py-8">
+        <header class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-cyan-600">X Beta Class Portal</h1>
+            <p class="text-lg text-gray-600 mt-2">English Presentation Scores & Feedback</p>
+        </header>
         
-        <div class="bg-white p-8 rounded-xl shadow-lg">
-            <p class="text-gray-700">
-                Welcome to the X Beta class page. Content for this page will be added soon.
-            </p>
-            <div id="class-specific-content-placeholder" class="mt-6">
+        <div class="bg-white p-6 md:p-8 rounded-xl shadow-lg">
+            <div class="mb-8 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+                <h2 class="text-xl font-semibold text-sky-700 mb-2">Scoring Scale Conversion:</h2>
+                <ul class="list-disc list-inside text-gray-700 space-y-1">
+                    <li>Developing (1): <strong class="text-red-600">50 / 100</strong></li>
+                    <li>Making Progress (2): <strong class="text-yellow-600">70 / 100</strong></li>
+                    <li>Proficient (3): <strong class="text-lime-600">85 / 100</strong></li>
+                    <li>Mastery (4): <strong class="text-green-600">95 / 100</strong></li>
+                </ul>
+            </div>
+
+            <div class="border-b border-gray-200 mb-6">
+                <nav class="-mb-px flex flex-wrap gap-2 sm:gap-4" aria-label="Tabs">
+                    <button data-tab-target="#group1-beta" class="tab-button active font-medium text-center text-gray-500 border-b-2 py-3 px-3 sm:px-4 text-sm sm:text-base rounded-t-md">Group 1</button>
+                    <button data-tab-target="#group2-beta" class="tab-button font-medium text-center text-gray-500 border-b-2 py-3 px-3 sm:px-4 text-sm sm:text-base rounded-t-md">Group 2</button>
+                    <button data-tab-target="#group3-beta" class="tab-button font-medium text-center text-gray-500 border-b-2 py-3 px-3 sm:px-4 text-sm sm:text-base rounded-t-md">Group 3</button>
+                    <button data-tab-target="#group4-beta" class="tab-button font-medium text-center text-gray-500 border-b-2 py-3 px-3 sm:px-4 text-sm sm:text-base rounded-t-md">Group 4</button>
+                </nav>
+            </div>
+
+            <div>
+                <div id="group1-beta" class="tab-content active">
+                    <h3 class="text-2xl font-bold text-cyan-700 mb-1">Group 1: Smart Home Technology</h3>
+                    <p class="text-md italic text-gray-600 mb-4">Overall Average Score (1-100): <strong class="text-green-600">91</strong></p>
+                    <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <h4 class="text-lg font-semibold text-green-800">Overall Assessment:</h4>
+                        <p class="text-gray-700 mt-1">This group delivered a highly proficient presentation, showcasing strong engagement and effective content delivery by key members. Their comprehensive understanding, innovative design, and excellent Q&A performance, particularly from their leader, significantly elevated their overall score.</p>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Criterion Breakdown:</h4>
+                    <div class="space-y-3">
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Content Knowledge (Understanding of Sustainability Principles)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Cherish - leader):</strong> Cherish demonstrated a comprehensive understanding by excellently handling rebuttals for all counter-arguments. While Everlyn and Vanessa needed to read slides, the overall group's grasp of sustainability principles behind smart home technology was proficient.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Content Knowledge (Accuracy of Information)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Everlyn and Vanessa, Cherish - leader):</strong> The accuracy of their content was excellent. Cherish's ability to provide excellent rebuttals further confirmed the high accuracy and relevance of the information presented by the group.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Design and Planning (Floor Plan and Layout Integration of Sustainable Features)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Rachel and Bella, Cherish - leader):</strong> The floor plan was exceptionally well-designed and looked like a mansion. The explanation of the sustainable features' integration was proficiently delivered, with Cherish providing valuable backup, showcasing innovative and functional design.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Visual Representation (Persuasive Argument)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Everlyn and Vanessa):</strong> The delivery by Everlyn and Vanessa was good and informative, providing clear information. While a stronger persuasive element could be developed, the core argument was clear and justified design choices.</p>
+                        </div>
+                         <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Visual Representation (Poster/Visuals)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback:</strong> The poster was great and promoted smart home technology effectively. The color being "too vibrant" was a minor aesthetic issue, but it still served its purpose clearly.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Presentation Skills (Clarity and Organization)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Everlyn and Vanessa, Cherish - leader):</strong> While the need for Everlyn and Vanessa to read slides impacted the fluidity of their individual sections, Cherish's strong leadership in handling rebuttals contributed significantly to the overall clarity and organization of the presentation, making it easy to follow.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Presentation Skills (Use of Visual Aids)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Everlyn and Vanessa):</strong> The reliance on reading slides indicates that the visual aids were effective enough to convey information. Despite this, the poster was great, and the overall presentation effectively utilized visuals to support the content.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Presentation Skills (Delivery and Engagement)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Everlyn and Vanessa, Cherish - leader):</strong> Everlyn and Vanessa were good in delivering information. Cherish demonstrated exceptional delivery and engagement by excellently performing rebuttals for all counter-arguments, significantly enriching the Q&A session.</p>
+                        </div>
+                    </div>
                 </div>
+
+                <div id="group2-beta" class="tab-content">
+                    <h3 class="text-2xl font-bold text-cyan-700 mb-1">Group 2: Rainwater Harvesting</h3>
+                    <p class="text-md italic text-gray-600 mb-4">Overall Average Score (1-100): <strong class="text-lime-600">88</strong></p>
+                    <div class="mb-6 p-4 bg-lime-50 border border-lime-200 rounded-lg">
+                        <h4 class="text-lg font-semibold text-lime-800">Overall Assessment:</h4>
+                        <p class="text-gray-700 mt-1">Group 2 delivered a strong and proficient performance, showcasing well-designed visual elements and effective Q&A. Their clear explanation of the poster's purpose and call to action were highlights, contributing to a solid overall presentation.</p>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Criterion Breakdown:</h4>
+                    <div class="space-y-3">
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Content Knowledge (Understanding of Sustainability Principles)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback:</strong> All questions were well-answered, indicating a deep and thorough understanding of rainwater harvesting and related sustainability principles.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Content Knowledge (Accuracy of Information)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback:</strong> The questions were well-answered, consistently demonstrating highly accurate and relevant information.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Design and Planning (Floor Plan and Layout Integration of Sustainable Features)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Santos and Benzema):</strong> The floor plan was good, clearly showing the integration of the rainwater harvesting system. They also explained the spatial relationship to a proficient degree.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Visual Representation (Persuasive Argument)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Gio and Gissel, Jennifer and Nathania):</strong> While Gio and Gissel's slides had too much text, the overall presentation provided clear information. Jennifer and Nathania's poster had a clear purpose to persuade and included a call to action, contributing to a proficient persuasive effort.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Visual Representation (Poster/Visuals)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Jennifer and Nathania):</strong> The poster was highly effective in its purpose to persuade people towards sustainability by applying rainwater harvesting. Jennifer and Nathania explained its purpose clearly and included a strong call to action, making it highly impactful.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Presentation Skills (Clarity and Organization)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Gio and Gissel):</strong> The presentation was good enough, providing clear information. However, the excessive text on the slides could have led to audience losing focus, indicating room for improvement in visual organization.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Presentation Skills (Use of Visual Aids)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Gio and Gissel):</strong> The slides had too much text, which could lead to audience losing focus. Despite this, the overall presentation was good enough, suggesting the presenters effectively conveyed information.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Presentation Skills (Delivery and Engagement)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback:</strong> The questions were well-answered, indicating strong engagement. The Q&A session was smooth, showing confident and effective delivery.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="group3-beta" class="tab-content">
+                    <h3 class="text-2xl font-bold text-cyan-700 mb-1">Group 3: Solar Panels</h3>
+                    <p class="text-md italic text-gray-600 mb-4">Overall Average Score (1-100): <strong class="text-green-600">91</strong></p>
+                    <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+                        <h4 class="text-lg font-semibold text-green-800">Overall Assessment:</h4>
+                        <p class="text-gray-700 mt-1">Group 3 delivered an outstanding presentation, marked by excellent informative content and strong Q&A performance. Their innovative floor plan design was a highlight, despite minor issues with poster contrast and slide text size.</p>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Criterion Breakdown:</h4>
+                    <div class="space-y-3">
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Content Knowledge (Understanding of Sustainability Principles)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Ethan and Alexander, Nicolas and Nabasa):</strong> The informative side of the presentation was excellent due to Ethan and Alexander's clear elaboration. Nicolas and Nabasa's concise explanation of solar panel integration showed complete understanding. All Q&A questions were answered well.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Content Knowledge (Accuracy of Information)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback:</strong> All questions, including those on Feng Shui and solar panel emissions, were answered well, consistently demonstrating highly accurate and reliable information.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Design and Planning (Floor Plan and Layout Integration of Sustainable Features)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Nicolas and Nabasa):</strong> The integration of Chinese Feng Shui principles added valuable information to the floor plan's spatial relationship. Crucially, the explanation of solar panel integration was brief, concise, and clear, showing a complete understanding of installation and maintenance, making it an exceptionally well-designed and functional plan.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Visual Representation (Persuasive Argument)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Ethan and Alexander):</strong> The persuasive side of the presentation could be considered proficient. While the informative side was excellent, the direct persuasive argument could be further strengthened.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Visual Representation (Poster/Visuals)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Ouwen and Waythan):</strong> The poster's design matched the topic well. Although there were minor contrast issues in text arrangement and color, the overall visual was clear and supported the presentation.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Presentation Skills (Clarity and Organization)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Ethan and Alexander):</strong> Ethan and Alexander made efficient use of discourse markers, contributing to exceptional clarity. Despite small font sizes on some slides, their concise and clear elaboration ensured information delivery was unaffected.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Presentation Skills (Use of Visual Aids)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-lime-600">3</strong></span><span>Score (1-100): <strong class="text-lime-600">85</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Ethan and Alexander, Ouwen and Waythan):</strong> Some text on slides was unreadable due to small font size. However, Ethan and Alexander's clear elaboration mitigated this. The poster was well-designed, despite minor contrast issues, indicating overall effective use of visuals.</p>
+                        </div>
+                        <div class="criterion-item">
+                            <p class="font-semibold text-gray-700">Presentation Skills (Delivery and Engagement)</p>
+                            <div class="flex flex-wrap gap-x-4 gap-y-1 text-sm mt-1"><span>Score (1-4): <strong class="text-green-600">4</strong></span><span>Score (1-100): <strong class="text-green-600">95</strong></span></div>
+                            <p class="text-sm text-gray-600 mt-2"><strong>Feedback (Ethan and Alexander):</strong> Ethan and Alexander delivered information concisely and clearly, demonstrating strong engagement. All Q&A questions were answered well, showcasing confident and effective audience interaction.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="group4-beta" class="tab-content">
+                    <h3 class="text-2xl font-bold text-cyan-700 mb-1">Group 4: Rainwater Harvesting</h3> <p class="text-md italic text-gray-600 mb-4">Overall Average Score (1-100): <strong class="text-gray-500">Pending</strong></p>
+                    <div class="mb-6 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+                        <h4 class="text-lg font-semibold text-gray-800">Overall Assessment:</h4>
+                        <p class="text-gray-700 mt-1">Scores and feedback for Group 4 are pending as their presentation has not yet occurred.</p>
+                    </div>
+                    <h4 class="text-xl font-semibold text-gray-800 mb-3">Criterion Breakdown:</h4>
+                    <div class="space-y-3">
+                        <div class="criterion-item"><p>Content Knowledge (Understanding of Sustainability Principles): <strong class="text-gray-500">Pending</strong></p></div>
+                        <div class="criterion-item"><p>Content Knowledge (Accuracy of Information): <strong class="text-gray-500">Pending</strong></p></div>
+                        <div class="criterion-item"><p>Design and Planning (Floor Plan and Layout Integration of Sustainable Features): <strong class="text-gray-500">Pending</strong></p></div>
+                        <div class="criterion-item"><p>Visual Representation (Persuasive Argument): <strong class="text-gray-500">Pending</strong></p></div>
+                        <div class="criterion-item"><p>Visual Representation (Poster/Visuals): <strong class="text-gray-500">Pending</strong></p></div>
+                        <div class="criterion-item"><p>Presentation Skills (Clarity and Organization): <strong class="text-gray-500">Pending</strong></p></div>
+                        <div class="criterion-item"><p>Presentation Skills (Use of Visual Aids): <strong class="text-gray-500">Pending</strong></p></div>
+                        <div class="criterion-item"><p>Presentation Skills (Delivery and Engagement): <strong class="text-gray-500">Pending</strong></p></div>
+                    </div>
+                </div>
+            </div>
         </div>
-        
     </main>
 
     <footer class="bg-gray-800 text-gray-300 py-8 text-center mt-12">
         <div class="container mx-auto px-6">
-            <p>&copy; <span id="currentYear"></span> Mr. Adz Dzaa - SMA Pelita Cemerlang. All rights reserved.</p>
+            <p>&copy; <span id="currentYear"></span> Mr. Adza - SMA Pelita Cemerlang. All rights reserved.</p>
             <p class="text-sm mt-1">
                 <a href="index.html" class="hover:text-teal-400 transition duration-300">Back to Main Portal</a>
             </p>
@@ -91,17 +318,15 @@
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        if (mobileMenuButton && mobileMenu) { // Check if elements exist
+        if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
-                mobileMenu.classList.toggle('flex'); // Use flex for vertical layout
+                mobileMenu.classList.toggle('flex');
             });
 
-            // Close mobile menu after clicking a link (if mobile menu is open)
             const mobileNavLinks = mobileMenu.querySelectorAll('a');
             mobileNavLinks.forEach(link => {
                 link.addEventListener('click', () => {
-                    // We don't prevent default for external links or different page links
                     if (!mobileMenu.classList.contains('hidden')) {
                         mobileMenu.classList.add('hidden');
                         mobileMenu.classList.remove('flex');
@@ -110,17 +335,26 @@
             });
         }
 
-
         // Set current year in footer
         const currentYearElement = document.getElementById('currentYear');
-        if (currentYearElement) { // Check if element exists
+        if (currentYearElement) {
             currentYearElement.textContent = new Date().getFullYear();
         }
 
-        // Note: The smooth scroll script from the main page is for on-page anchors.
-        // Since these nav links point to a different page (index.html#section),
-        // the browser will handle the jump. If you add on-page anchors to this
-        // xbeta.html page later, you can re-include the smooth scroll logic here.
+        // Tab functionality
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                button.classList.add('active');
+                const targetTab = button.getAttribute('data-tab-target');
+                document.querySelector(targetTab).classList.add('active');
+            });
+        });
     </script>
 
 </body>
