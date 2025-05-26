@@ -37,6 +37,46 @@
         #mobile-menu {
             transition: transform 0.3s ease-in-out;
         }
+
+        /* Portfolio Folder Styles */
+        .portfolio-folder-trigger {
+            background-color: #E0E7FF; /* indigo-100 for a folder-like feel */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #C7D2FE; /* indigo-200 */
+        }
+        .portfolio-folder-trigger:hover {
+            background-color: #C7D2FE; /* indigo-200 */
+        }
+        .portfolio-folder-trigger.folder-open {
+            background-color: #A5B4FC; /* indigo-300 */
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+        .arrow-icon {
+            transition: transform 0.3s ease-in-out;
+            font-size: 1.25rem; /* text-xl */
+            margin-left: 0.5rem; /* ml-2 */
+        }
+        .portfolio-folder-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+            background-color: #F9FAFB; /* bg-gray-50 slightly lighter than page bg */
+            border: 1px solid #E5E7EB; /* border-gray-200 */
+            border-top: none;
+            border-bottom-left-radius: 0.5rem; /* rounded-b-lg */
+            border-bottom-right-radius: 0.5rem; /* rounded-b-lg */
+            padding: 0; /* Padding will be added if open */
+        }
+        .portfolio-folder-content.open {
+            padding: 1.5rem; /* p-6 when open */
+        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -105,38 +145,65 @@
 
     <section id="experience" class="py-16 md:py-24 bg-gray-50">
         <div class="container mx-auto px-6">
-            <h2 class="text-3xl md:text-4xl font-bold text-center text-teal-600 mb-16">
-                Teaching Portfolio: Class Resources & Student Work
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-teal-600 mb-10"> 
+                Teaching Portfolio
             </h2>
-            <p class="text-center text-lg text-gray-600 mb-12 max-w-2xl mx-auto">
-                As part of my teaching experience at SMA Pelita Cemerlang, I've developed and maintained dedicated online portals for my Grade 10 English classes. These platforms serve as resource hubs and showcase examples of student progress and assessment. Below are links to these portfolio items:
+            <p class="text-center text-lg text-gray-600 mb-16 max-w-3xl mx-auto"> 
+                Explore examples of student assessments and class resources I've developed as part of my English Language Teaching at SMA Pelita Cemerlang. These items showcase my approach to student evaluation and material development.
             </p>
-            <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-teal-500">
-                    <div class="text-4xl md:text-5xl text-teal-500 mb-4">α</div>
-                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Alfa - Student Assessments</h3>
-                    <p class="text-sm sm:text-base text-gray-600 mb-6">
-                        Key assessments and resources from the Grade 10 English X Alfa class.
-                    </p>
-                    <a href="xalfa.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View X Alfa Portfolio Item</a>
-                </div>
 
-                <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-cyan-500">
-                    <div class="text-4xl md:text-5xl text-cyan-500 mb-4">β</div>
-                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Beta - Student Assessments</h3>
-                    <p class="text-sm sm:text-base text-gray-600 mb-6">
-                        Key assessments and resources from the Grade 10 English X Beta class.
-                    </p>
-                    <a href="xbeta.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View X Beta Portfolio Item</a>
-                </div>
+            <div class="portfolio-item-container mb-8"> 
+                <h3 class="portfolio-folder-trigger text-2xl md:text-3xl font-semibold text-slate-700">
+                    Student Work & Assessments
+                    <span class="arrow-icon">▼</span>
+                </h3>
+                <div class="portfolio-folder-content">
+                    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-teal-500">
+                            <div class="text-4xl md:text-5xl text-teal-500 mb-4">α</div>
+                            <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Alfa - Student Assessments</h4>
+                            <p class="text-sm sm:text-base text-gray-600 mb-6">
+                                Key assessments and feedback from the Grade 10 English X Alfa class.
+                            </p>
+                            <a href="xalfa.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View X Alfa Assessments</a>
+                        </div>
 
-                <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-purple-500">
-                    <div class="text-4xl md:text-5xl text-purple-500 mb-4">Δ</div>
-                    <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Delta - Student Assessments</h3>
-                    <p class="text-sm sm:text-base text-gray-600 mb-6">
-                        Key assessments and resources from the Grade 10 English X Delta class.
-                    </p>
-                    <a href="xdelta.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View X Delta Portfolio Item</a>
+                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-cyan-500">
+                            <div class="text-4xl md:text-5xl text-cyan-500 mb-4">β</div>
+                            <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Beta - Student Assessments</h4>
+                            <p class="text-sm sm:text-base text-gray-600 mb-6">
+                                Key assessments and feedback from the Grade 10 English X Beta class.
+                            </p>
+                            <a href="xbeta.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View X Beta Assessments</a>
+                        </div>
+
+                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-purple-500">
+                            <div class="text-4xl md:text-5xl text-purple-500 mb-4">Δ</div>
+                            <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Delta - Student Assessments</h4>
+                            <p class="text-sm sm:text-base text-gray-600 mb-6">
+                                Key assessments and feedback from the Grade 10 English X Delta class.
+                            </p>
+                            <a href="xdelta.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View X Delta Assessments</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-item-container">
+                <h3 class="portfolio-folder-trigger text-2xl md:text-3xl font-semibold text-slate-700">
+                    Sample Class Resources
+                    <span class="arrow-icon">▼</span>
+                </h3>
+                <div class="portfolio-folder-content">
+                    <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 mt-6"> 
+                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-sky-500 max-w-md mx-auto"> <div class="text-4xl md:text-5xl text-sky-500 mb-4">📚</div> 
+                            <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">ELT Resource Pack</h4>
+                            <p class="text-sm sm:text-base text-gray-600 mb-6">
+                                A collection of general resources and materials for English Language Teaching.
+                            </p>
+                            <a href="#" class="inline-block bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View Resource (Soon)</a>
+                        </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -166,32 +233,14 @@
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
         
-        if (mobileMenuButton && mobileMenu) { // Check if elements exist
+        if (mobileMenuButton && mobileMenu) {
             mobileMenuButton.addEventListener('click', () => {
                 mobileMenu.classList.toggle('hidden');
-                mobileMenu.classList.toggle('flex'); // Use flex for vertical layout
+                mobileMenu.classList.toggle('flex');
             });
 
-            // Smooth scroll for navigation links (both desktop and mobile)
-            // Also closes mobile menu if open
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        // Calculate offset for fixed navbar
-                        const navbarHeight = document.querySelector('nav').offsetHeight;
-                        const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-                        const offsetPosition = elementPosition - navbarHeight;
-                    
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
-                    }
-
-                    // Close mobile menu after clicking a link (if mobile menu is open)
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
                     if (!mobileMenu.classList.contains('hidden')) {
                         mobileMenu.classList.add('hidden');
                         mobileMenu.classList.remove('flex');
@@ -200,11 +249,78 @@
             });
         }
 
+        // Smooth scroll for navigation links
+        document.querySelectorAll('nav a[href^="#"], #home a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const navbarHeight = document.querySelector('nav').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - navbarHeight;
+                
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
         // Set current year in footer
         const currentYearElement = document.getElementById('currentYear');
-        if (currentYearElement) { // Check if element exists
+        if (currentYearElement) {
              currentYearElement.textContent = new Date().getFullYear();
         }
+
+        // Portfolio Folder Accordion Logic
+        const portfolioItems = document.querySelectorAll('.portfolio-item-container');
+        portfolioItems.forEach(item => {
+            const trigger = item.querySelector('.portfolio-folder-trigger');
+            const content = item.querySelector('.portfolio-folder-content');
+            const arrow = trigger.querySelector('.arrow-icon');
+
+            const openFolder = () => {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.classList.add('open'); // For padding
+                trigger.classList.add('folder-open');
+                if(arrow) arrow.style.transform = 'rotate(180deg)';
+            };
+
+            const closeFolder = () => {
+                content.style.maxHeight = '0';
+                content.classList.remove('open'); // Remove padding
+                trigger.classList.remove('folder-open');
+                if(arrow) arrow.style.transform = 'rotate(0deg)';
+            };
+
+            trigger.addEventListener('click', () => {
+                const isCurrentlyOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+                if (isCurrentlyOpen) {
+                    closeFolder();
+                    item.dataset.clickedOpen = 'false';
+                } else {
+                    openFolder();
+                    item.dataset.clickedOpen = 'true';
+                }
+            });
+
+            // Desktop hover logic
+            if (window.matchMedia('(hover: hover) and (min-width: 768px)').matches) {
+                item.addEventListener('mouseenter', () => {
+                    if (item.dataset.clickedOpen !== 'true') {
+                        openFolder();
+                    }
+                });
+
+                item.addEventListener('mouseleave', () => {
+                    if (item.dataset.clickedOpen !== 'true') {
+                        closeFolder();
+                    }
+                });
+            }
+        });
     </script>
 
 </body>
