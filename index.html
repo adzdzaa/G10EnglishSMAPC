@@ -38,13 +38,13 @@
             transition: transform 0.3s ease-in-out;
         }
 
-        /* Portfolio Folder Styles */
+        /* Portfolio Folder Styles - REFINED for padding issue */
         .portfolio-folder-trigger {
-            background-color: #E0E7FF; /* indigo-100 for a folder-like feel */
+            background-color: #E0E7FF; /* indigo-100 */
             padding: 0.75rem 1.5rem; /* py-3 px-6 */
             border-radius: 0.5rem; /* rounded-lg */
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s ease, border-radius 0.1s ease;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -57,6 +57,7 @@
             background-color: #A5B4FC; /* indigo-300 */
             border-bottom-left-radius: 0;
             border-bottom-right-radius: 0;
+            border-bottom-color: transparent; /* Seamless transition to content */
         }
         .arrow-icon {
             transition: transform 0.3s ease-in-out;
@@ -66,17 +67,17 @@
         .portfolio-folder-content {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.5s ease-in-out;
-            background-color: #F9FAFB; /* bg-gray-50 slightly lighter than page bg */
-            border: 1px solid #E5E7EB; /* border-gray-200 */
-            border-top: none;
+            transition: max-height 0.5s ease-in-out; /* Only transition max-height */
+            background-color: #F9FAFB; /* bg-gray-50 */
+            border-left: 1px solid #C7D2FE; /* indigo-200 */
+            border-right: 1px solid #C7D2FE; /* indigo-200 */
+            border-bottom: 1px solid #C7D2FE; /* indigo-200 */
             border-bottom-left-radius: 0.5rem; /* rounded-b-lg */
             border-bottom-right-radius: 0.5rem; /* rounded-b-lg */
-            padding: 0; /* Padding will be added if open */
+            padding: 1.5rem; /* p-6 - Always apply full padding */
+            /* border-top is visually handled by trigger's bottom edge */
         }
-        .portfolio-folder-content.open {
-            padding: 1.5rem; /* p-6 when open */
-        }
+        /* Removed .portfolio-folder-content.content-visible class */
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -157,8 +158,7 @@
                     Student Work & Assessments
                     <span class="arrow-icon">▼</span>
                 </h3>
-                <div class="portfolio-folder-content">
-                    <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-8 mt-6">
+                <div class="portfolio-folder-content"> <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-8">
                         <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-teal-500">
                             <div class="text-4xl md:text-5xl text-teal-500 mb-4">α</div>
                             <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Alfa - Student Assessments</h4>
@@ -194,16 +194,16 @@
                     Sample Class Resources
                     <span class="arrow-icon">▼</span>
                 </h3>
-                <div class="portfolio-folder-content">
-                    <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8 mt-6"> 
-                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-sky-500 max-w-md mx-auto"> <div class="text-4xl md:text-5xl text-sky-500 mb-4">📚</div> 
+                <div class="portfolio-folder-content"> <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8"> 
+                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-sky-500 max-w-md mx-auto"> 
+                            <div class="text-4xl md:text-5xl text-sky-500 mb-4">📚</div> 
                             <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">ELT Resource Pack</h4>
                             <p class="text-sm sm:text-base text-gray-600 mb-6">
                                 A collection of general resources and materials for English Language Teaching.
                             </p>
                             <a href="#" class="inline-block bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View Resource (Soon)</a>
                         </div>
-                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -229,6 +229,7 @@
     </footer>
 
     <script>
+      (function() { // IIFE to scope variables
         // Mobile menu toggle
         const mobileMenuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -274,7 +275,7 @@
              currentYearElement.textContent = new Date().getFullYear();
         }
 
-        // Portfolio Folder Accordion Logic
+        // Portfolio Folder Accordion Logic - JS refined
         const portfolioItems = document.querySelectorAll('.portfolio-item-container');
         portfolioItems.forEach(item => {
             const trigger = item.querySelector('.portfolio-folder-trigger');
@@ -282,15 +283,14 @@
             const arrow = trigger.querySelector('.arrow-icon');
 
             const openFolder = () => {
+                // Ensure scrollHeight is calculated based on content with its actual padding
                 content.style.maxHeight = content.scrollHeight + 'px';
-                content.classList.add('open'); // For padding
                 trigger.classList.add('folder-open');
                 if(arrow) arrow.style.transform = 'rotate(180deg)';
             };
 
             const closeFolder = () => {
                 content.style.maxHeight = '0';
-                content.classList.remove('open'); // Remove padding
                 trigger.classList.remove('folder-open');
                 if(arrow) arrow.style.transform = 'rotate(0deg)';
             };
@@ -321,6 +321,7 @@
                 });
             }
         });
+      })(); // End of IIFE
     </script>
 
 </body>
