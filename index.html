@@ -20,7 +20,7 @@
             scroll-behavior: smooth;
         }
         /* Simple animation for cards on hover */
-        .class-card:hover {
+        .class-card:hover { /* This is for the student assessment cards */
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
         }
@@ -38,7 +38,7 @@
             transition: transform 0.3s ease-in-out;
         }
 
-        /* Portfolio Folder Styles - REFINED for padding issue */
+        /* Portfolio Folder Styles */
         .portfolio-folder-trigger {
             background-color: #E0E7FF; /* indigo-100 */
             padding: 0.75rem 1.5rem; /* py-3 px-6 */
@@ -59,6 +59,19 @@
             border-bottom-right-radius: 0;
             border-bottom-color: transparent; /* Seamless transition to content */
         }
+        /* Specific styling for resources folder trigger */
+        .resources-folder-trigger {
+            background-color: #E0F2FE; /* sky-100 */
+            border-color: #BAE6FD; /* sky-200 */
+        }
+        .resources-folder-trigger:hover {
+            background-color: #BAE6FD; /* sky-200 */
+        }
+        .resources-folder-trigger.folder-open {
+            background-color: #7DD3FC; /* sky-300 */
+            border-bottom-color: transparent;
+        }
+
         .arrow-icon {
             transition: transform 0.3s ease-in-out;
             font-size: 1.25rem; /* text-xl */
@@ -69,15 +82,56 @@
             overflow: hidden;
             transition: max-height 0.5s ease-in-out; /* Only transition max-height */
             background-color: #F9FAFB; /* bg-gray-50 */
-            border-left: 1px solid #C7D2FE; /* indigo-200 */
-            border-right: 1px solid #C7D2FE; /* indigo-200 */
-            border-bottom: 1px solid #C7D2FE; /* indigo-200 */
+            border-left: 1px solid #C7D2FE; /* Default border, overridden by resources-folder-content if needed */
+            border-right: 1px solid #C7D2FE;
+            border-bottom: 1px solid #C7D2FE;
             border-bottom-left-radius: 0.5rem; /* rounded-b-lg */
             border-bottom-right-radius: 0.5rem; /* rounded-b-lg */
             padding: 1.5rem; /* p-6 - Always apply full padding */
-            /* border-top is visually handled by trigger's bottom edge */
         }
-        /* Removed .portfolio-folder-content.content-visible class */
+        /* Specific border for resources folder content to match its trigger */
+        .resources-folder-content {
+             border-left-color: #BAE6FD; /* sky-200 */
+             border-right-color: #BAE6FD; /* sky-200 */
+             border-bottom-color: #BAE6FD; /* sky-200 */
+        }
+
+        /* Styling for the refined resource card */
+        .resource-pack-card {
+            display: flex;
+            align-items: flex-start; /* Align items to the top */
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            border: 1px solid #E2E8F0; /* slate-200 */
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -2px rgba(0,0,0,0.05); /* Softer shadow-lg */
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            overflow: hidden; /* To contain the accent border */
+        }
+        .resource-pack-card:hover {
+             transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04); /* shadow-xl */
+        }
+        .resource-accent-border {
+            width: 0.5rem; /* w-2 */
+            background-color: #0EA5E9; /* sky-500 */
+            align-self: stretch; /* Make border full height of card */
+        }
+        .resource-icon-container {
+            padding: 1.5rem; /* p-6 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .resource-icon-container svg {
+            width: 3rem; /* w-12 */
+            height: 3rem; /* h-12 */
+            color: #0EA5E9; /* sky-500 */
+        }
+        .resource-text-content {
+            padding: 1.5rem; /* p-6 */
+            flex-grow: 1;
+        }
+
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
@@ -150,58 +204,30 @@
                 Teaching Portfolio
             </h2>
             <p class="text-center text-lg text-gray-600 mb-16 max-w-3xl mx-auto"> 
-                Explore examples of student assessments and class resources I've developed as part of my English Language Teaching at SMA Pelita Cemerlang. These items showcase my approach to student evaluation and material development.
+                Explore examples of class resources I've developed as part of my English Language Teaching at SMA Pelita Cemerlang. This item showcases my approach to material development.
             </p>
 
-            <div class="portfolio-item-container mb-8"> 
-                <h3 class="portfolio-folder-trigger text-2xl md:text-3xl font-semibold text-slate-700">
-                    Student Work & Assessments
-                    <span class="arrow-icon">▼</span>
-                </h3>
-                <div class="portfolio-folder-content"> <div class="grid sm:grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-teal-500">
-                            <div class="text-4xl md:text-5xl text-teal-500 mb-4">α</div>
-                            <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Alfa - Student Assessments</h4>
-                            <p class="text-sm sm:text-base text-gray-600 mb-6">
-                                Key assessments and feedback from the Grade 10 English X Alfa class.
-                            </p>
-                            <a href="xalfa.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-teal-500 hover:bg-teal-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View X Alfa Assessments</a>
-                        </div>
-
-                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-cyan-500">
-                            <div class="text-4xl md:text-5xl text-cyan-500 mb-4">β</div>
-                            <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Beta - Student Assessments</h4>
-                            <p class="text-sm sm:text-base text-gray-600 mb-6">
-                                Key assessments and feedback from the Grade 10 English X Beta class.
-                            </p>
-                            <a href="xbeta.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-cyan-500 hover:bg-cyan-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View X Beta Assessments</a>
-                        </div>
-
-                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-purple-500">
-                            <div class="text-4xl md:text-5xl text-purple-500 mb-4">Δ</div>
-                            <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">X Delta - Student Assessments</h4>
-                            <p class="text-sm sm:text-base text-gray-600 mb-6">
-                                Key assessments and feedback from the Grade 10 English X Delta class.
-                            </p>
-                            <a href="xdelta.html" target="_blank" rel="noopener noreferrer" class="inline-block bg-purple-500 hover:bg-purple-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View X Delta Assessments</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="portfolio-item-container">
-                <h3 class="portfolio-folder-trigger text-2xl md:text-3xl font-semibold text-slate-700">
+                <h3 class="portfolio-folder-trigger resources-folder-trigger text-2xl md:text-3xl font-semibold text-slate-700">
                     Sample Class Resources
                     <span class="arrow-icon">▼</span>
                 </h3>
-                <div class="portfolio-folder-content"> <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8"> 
-                        <div class="class-card bg-white p-6 md:p-8 rounded-xl shadow-lg text-center border-t-4 border-sky-500 max-w-md mx-auto"> 
-                            <div class="text-4xl md:text-5xl text-sky-500 mb-4">📚</div> 
-                            <h4 class="text-xl md:text-2xl font-bold text-gray-800 mb-3">ELT Resource Pack</h4>
-                            <p class="text-sm sm:text-base text-gray-600 mb-6">
-                                A collection of general resources and materials for English Language Teaching.
-                            </p>
-                            <a href="#" class="inline-block bg-sky-500 hover:bg-sky-600 text-white font-semibold py-2 px-4 sm:px-6 rounded-lg transition duration-300 text-sm sm:text-base">View Resource (Soon)</a>
+                <div class="portfolio-folder-content resources-folder-content"> 
+                    <div class="grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-8"> 
+                        <div class="resource-pack-card max-w-2xl mx-auto"> 
+                            <div class="resource-accent-border"></div>
+                            <div class="resource-icon-container">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-12 h-12 text-sky-500">
+                                  <path d="M11.25 4.533A9.707 9.707 0 0 0 6 3a9.735 9.735 0 0 0-3.25.555.75.75 0 0 0-.5.707v14.522c0 .318.203.609.5.707A9.735 9.735 0 0 0 6 21a9.707 9.707 0 0 0 5.25-1.533.75.75 0 0 0 0-1.322V5.855a.75.75 0 0 0 0-1.322ZM12.75 5.855A9.707 9.707 0 0 1 18 4.5a9.735 9.735 0 0 1 3.25.555.75.75 0 0 1 .5.707v14.522c0 .318-.203.609-.5.707A9.735 9.735 0 0 1 18 22.5a9.707 9.707 0 0 1-5.25-1.533.75.75 0 0 1 0-1.322V5.855a.75.75 0 0 1 0-1.322Z" />
+                                </svg>
+                            </div>
+                            <div class="resource-text-content"> 
+                                <h4 class="text-xl md:text-2xl font-semibold text-slate-800 mb-2">ELT Resource Pack</h4>
+                                <p class="text-sm sm:text-base text-gray-600 mb-4">
+                                    A collection of general resources and materials for English Language Teaching.
+                                </p>
+                                <a href="#" class="inline-block bg-gradient-to-r from-sky-500 to-cyan-500 hover:from-sky-600 hover:to-cyan-600 text-white font-semibold py-2 px-5 rounded-lg transition duration-300 text-sm sm:text-base shadow-md hover:shadow-lg">View Resource (Soon)</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -275,7 +301,7 @@
              currentYearElement.textContent = new Date().getFullYear();
         }
 
-        // Portfolio Folder Accordion Logic - JS refined
+        // Portfolio Folder Accordion Logic
         const portfolioItems = document.querySelectorAll('.portfolio-item-container');
         portfolioItems.forEach(item => {
             const trigger = item.querySelector('.portfolio-folder-trigger');
@@ -283,7 +309,6 @@
             const arrow = trigger.querySelector('.arrow-icon');
 
             const openFolder = () => {
-                // Ensure scrollHeight is calculated based on content with its actual padding
                 content.style.maxHeight = content.scrollHeight + 'px';
                 trigger.classList.add('folder-open');
                 if(arrow) arrow.style.transform = 'rotate(180deg)';
