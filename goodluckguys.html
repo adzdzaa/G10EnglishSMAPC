@@ -3,44 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7th Grade English Review (Enhanced)</title>
+    <title>7th Grade English Review (MCQ & Essays)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8; /* Lighter, cleaner background */
+            background-color: #f0f4f8; /* Light gray-blue background */
         }
         .quiz-card {
             background-color: #ffffff;
             border-radius: 1rem; /* Softer, larger radius */
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
-        .option-button {
+        .option-button, .essay-textarea {
             transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, transform 0.1s ease-in-out;
             border-width: 2px;
+            border-radius: 0.5rem; /* Tailwind rounded-lg */
+        }
+        .essay-textarea {
+            width: 100%;
+            min-height: 150px; /* Standard height for essay input */
+            padding: 0.75rem; /* p-3 */
+            border-color: #cbd5e1; /* slate-300 */
+            line-height: 1.5; /* Improved readability for typed text */
+        }
+        .essay-textarea:focus {
+            border-color: #3b82f6; /* blue-500 */
+            box-shadow: 0 0 0 2px #bfdbfe; /* blue-200 ring */
+            outline: none;
         }
         .option-button:hover {
-            border-color: #60a5fa; /* Tailwind blue-400 */
-            background-color: #f0f9ff; /* Tailwind blue-50 */
+            border-color: #60a5fa; /* Tailwind blue-400 for hover */
+            background-color: #f0f9ff; /* Tailwind blue-50 for hover */
         }
         .option-button.selected {
-            border-color: #3b82f6; /* Tailwind blue-500 */
-            background-color: #dbeafe; /* Tailwind blue-100 */
-            box-shadow: 0 0 0 2px #bfdbfe; /* Tailwind blue-200 */
+            border-color: #3b82f6; /* Tailwind blue-500 for selected */
+            background-color: #dbeafe; /* Tailwind blue-100 for selected */
+            box-shadow: 0 0 0 2px #bfdbfe; /* Tailwind blue-200 ring for selected */
         }
         .option-button.correct {
             background-color: #dcfce7 !important; /* Tailwind green-100 */
             border-color: #22c55e !important; /* Tailwind green-500 */
-            color: #166534; /* Darker green text for better contrast */
+            color: #166534; /* Darker green text for contrast */
         }
         .option-button.incorrect {
             background-color: #fee2e2 !important; /* Tailwind red-100 */
             border-color: #ef4444 !important; /* Tailwind red-500 */
-            color: #991b1b; /* Darker red text */
+            color: #991b1b; /* Darker red text for contrast */
         }
         .primary-button {
-            background-image: linear-gradient(to right, #3b82f6, #2563eb);
+            background-image: linear-gradient(to right, #3b82f6, #2563eb); /* Blue gradient */
             transition: all 0.3s ease;
             box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
         }
@@ -57,64 +70,70 @@
             transform: none;
             box-shadow: none;
         }
-        .secondary-button { /* This class was on next-button along with primary-button, ensuring it has distinct styles if needed */
-            background-image: linear-gradient(to right, #10b981, #059669);
+        .secondary-button { /* For Next Question button */
+            background-image: linear-gradient(to right, #10b981, #059669); /* Green gradient */
         }
         .secondary-button:hover {
             background-image: linear-gradient(to right, #059669, #047857);
         }
-        .restart-button {
-             background-image: linear-gradient(to right, #6366f1, #4f46e5);
+        .restart-button { /* For Restart Quiz button */
+             background-image: linear-gradient(to right, #6366f1, #4f46e5); /* Indigo/Purple gradient */
         }
        .restart-button:hover {
             background-image: linear-gradient(to right, #4f46e5, #4338ca);
         }
+        .passage-content::-webkit-scrollbar { width: 6px; }
+        .passage-content::-webkit-scrollbar-track { background: #e5e7eb; border-radius: 10px; }
+        .passage-content::-webkit-scrollbar-thumb { background: #9ca3af; border-radius: 10px; }
+        .passage-content::-webkit-scrollbar-thumb:hover { background: #6b7280; }
 
-        .passage-content::-webkit-scrollbar {
-            width: 6px;
-        }
-        .passage-content::-webkit-scrollbar-track {
-            background: #e5e7eb; /* Tailwind gray-200 */
-            border-radius: 10px;
-        }
-        .passage-content::-webkit-scrollbar-thumb {
-            background: #9ca3af; /* Tailwind gray-400 */
-            border-radius: 10px;
-        }
-        .passage-content::-webkit-scrollbar-thumb:hover {
-            background: #6b7280; /* Tailwind gray-500 */
-        }
-        .explanation-text {
+        .mcq-explanation-text {
             font-size: 0.875rem; /* text-sm */
-            color: #374151; /* Tailwind gray-700, slightly darker for better contrast on light bg */
+            color: #374151; /* gray-700 */
             margin-top: 0.75rem; /* mt-3 */
             padding: 0.75rem; /* p-3 */
-            background-color: #f3f4f6; /* Tailwind gray-100, slightly different from passage bg */
-            border-left: 4px solid #60a5fa; /* Tailwind blue-400, slightly thicker border */
+            background-color: #f3f4f6; /* gray-100 */
+            border-left: 4px solid #60a5fa; /* blue-400 */
             border-radius: 0.375rem; /* rounded-md */
-            line-height: 1.6; /* Slightly more line height */
-            display: block; /* Ensures it takes full width and respects margin/padding */
+            line-height: 1.6;
+            display: block;
         }
-        .progress-bar-container {
-            height: 8px;
-            background-color: #e5e7eb; /* Tailwind gray-200 */
-            border-radius: 9999px;
-            overflow: hidden;
-            margin-bottom: 1.5rem;
+        .essay-feedback-container {
+            margin-top: 0.5rem; /* Add some space above the model answer/checklist block */
         }
-        .progress-bar {
-            height: 100%;
-            background-color: #3b82f6; /* Tailwind blue-500 */
-            transition: width 0.3s ease-in-out;
-            border-radius: 9999px;
+        .essay-feedback-container h4 {
+            font-size: 1rem; /* text-base, slightly larger for section titles */
+            font-weight: 600; /* semibold */
+            color: #1f2937; /* gray-800 */
+            margin-bottom: 0.5rem; /* mb-2 */
+            margin-top: 0.75rem; /* mt-3, especially for the second h4 */
         }
+        .essay-feedback-container p, .essay-feedback-container ul {
+            font-size: 0.875rem; /* text-sm */
+            color: #374151; /* gray-700 */
+            background-color: #f9fafb; /* gray-50 */
+            padding: 0.75rem; /* p-3 */
+            border: 1px solid #e5e7eb; /* gray-200 border for definition */
+            border-radius: 0.375rem; /* rounded-md */
+            line-height: 1.6;
+        }
+        .essay-feedback-container ul {
+            list-style-position: inside;
+            list-style-type: disc;
+            padding-left: 1.25rem; /* Add padding for bullet points */
+        }
+        .essay-feedback-container > div + div { /* Margin between model answer and checklist sections */
+            margin-top: 1rem; /* mt-4 */
+        }
+
+        .progress-bar-container { height: 10px; background-color: #e5e7eb; border-radius: 9999px; overflow: hidden; margin-bottom: 1.5rem; }
+        .progress-bar { height: 100%; background-color: #3b82f6; transition: width 0.3s ease-in-out; border-radius: 9999px; }
     </style>
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6">
 
-    <div id="quiz-container" class="quiz-card p-5 sm:p-8 w-full max-w-xl">
-        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-center text-slate-800 mb-2">7th Grade English Review</h1>
-        <p class="text-center text-sm text-slate-500 mb-6">Test your knowledge!</p>
+    <div id="quiz-container" class="quiz-card p-5 sm:p-8 w-full max-w-2xl"> <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-center text-slate-800 mb-2">7th Grade English Review</h1>
+        <p class="text-center text-sm text-slate-500 mb-6">Test your knowledge & practice writing!</p>
 
         <div class="progress-bar-container">
             <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
@@ -127,14 +146,12 @@
 
         <div id="question-area">
             <p id="progress-text" class="text-xs sm:text-sm text-slate-500 mb-2 text-right"></p>
-            <h2 id="question-text" class="text-md sm:text-lg font-semibold text-slate-800 mb-6 min-h-[4em] sm:min-h-[3.5em] leading-snug"></h2>
-            <div id="options-container" class="space-y-3 sm:space-y-4">
-                </div>
+            <h2 id="question-text" class="text-md sm:text-lg font-semibold text-slate-800 mb-4 min-h-[3em] sm:min-h-[2.5em] leading-snug"></h2>
+            <div id="options-container" class="space-y-3 sm:space-y-4 mt-2"> </div>
         </div>
 
-        <div id="feedback-area" class="mt-5 text-sm py-1">
-            <p id="feedback-text" class="font-medium"></p>
-        </div>
+        <div id="feedback-area" class="mt-5 text-sm py-1"> <p id="feedback-text" class="font-medium"></p>
+            </div>
 
         <div id="navigation-area" class="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
             <button id="submit-button" class="primary-button w-full sm:w-auto text-white font-semibold py-2.5 px-6 rounded-lg shadow-md disabled:opacity-70 disabled:cursor-not-allowed">Submit Answer</button>
@@ -143,14 +160,14 @@
 
         <div id="score-area" class="text-center mt-8 py-6" style="display: none;">
             <h2 class="text-2xl sm:text-3xl font-bold text-slate-800">Quiz Completed!</h2>
-            <p id="score-text" class="text-lg sm:text-xl text-slate-700 mt-3"></p>
-            <p id="percentage-text" class="text-md sm:text-lg text-blue-600 font-semibold mt-1"></p>
+            <p id="mcr-score-text" class="text-lg sm:text-xl text-slate-700 mt-3"></p>
+            <p id="mcr-percentage-text" class="text-md sm:text-lg text-blue-600 font-semibold mt-1"></p>
+            <p class="text-md text-slate-600 mt-4 px-2">You have also completed the essay practice sections. Review your writing based on the provided models and checklists!</p>
             <button id="restart-button" class="restart-button primary-button mt-8 text-white font-semibold py-3 px-10 rounded-lg shadow-md">Restart Quiz</button>
         </div>
     </div>
 
     <script>
-        // --- Question Data (Revised to 30 Qs with Explanations) ---
         const Aethelgard_Passage = `The Lost City of Aethelgard
 
 Deep within the Whispering Woods, legend spoke of Aethelgard, a city _____ (4) vanished centuries ago. Archaeologists believed its inhabitants _____ (5) master builders, erecting structures that defied the engineering of their time. They were also renowned for their astronomical knowledge, supposedly able _____ (6) predict celestial events with uncanny accuracy. The city's sudden disappearance remains a puzzle, with theories ranging from natural disasters to internal conflict.`;
@@ -160,412 +177,445 @@ Deep within the Whispering Woods, legend spoke of Aethelgard, a city _____ (4) v
 In recent years, urban gardening has seen a significant surge in popularity. City dwellers are increasingly interested in (11)_____ their own food, transforming balconies and rooftops into green spaces. This trend not only provides fresh produce but also helps (12)_____ a connection with nature amidst concrete jungles. Many communities are now organizing workshops (13)_____ residents with the necessary skills.`;
 
         const questions = [
+            // --- Restored 30 MCQ Questions ---
             {
                 question: "My brother _____ play the guitar every day when he was younger, but now he prefers the piano.",
                 options: ["uses to", "used to", "is using", "use to"],
-                answer: 1,
-                passage: null,
-                explanation: "'Used to' is the correct phrase to talk about past habits or states that are no longer true."
+                answer: 1, passage: null, explanation: "'Used to' is the correct phrase to talk about past habits or states that are no longer true."
             },
             {
                 question: "She is very keen _____ participating in the upcoming science fair.",
                 options: ["to", "on", "for", "at"],
-                answer: 1,
-                passage: null,
-                explanation: "The phrase 'keen on' is followed by a gerund (verb + -ing) to express enthusiasm for something."
+                answer: 1, passage: null, explanation: "The phrase 'keen on' is followed by a gerund (verb + -ing) to express enthusiasm for something."
             },
             {
                 question: "The smartphone _____ I recently purchased has an excellent battery life.",
                 options: ["who", "that", "where", "when"],
-                answer: 1,
-                passage: null,
-                explanation: "'That' (or 'which') is a relative pronoun used to introduce a clause giving more information about a thing (the smartphone)."
+                answer: 1, passage: null, explanation: "'That' (or 'which') is a relative pronoun used to introduce a clause giving more information about a thing (the smartphone)."
             },
-            {
+            { // Question 4 - Uses Aethelgard_Passage
                 question: "Deep within the Whispering Woods, legend spoke of Aethelgard, a city _____ (4) vanished centuries ago.",
                 options: ["who", "which", "where", "whose"],
-                answer: 1,
-                passage: Aethelgard_Passage,
-                explanation: "'Which' is used as a relative pronoun to refer to things (the city)."
+                answer: 1, passage: Aethelgard_Passage, explanation: "'Which' is used as a relative pronoun to refer to things (the city)."
             },
-            {
+            { // Question 5 - Uses Aethelgard_Passage
                 question: "Archaeologists believed its inhabitants _____ (5) master builders, erecting structures that defied the engineering of their time.",
                 options: ["are", "were", "will be", "be"],
-                answer: 1,
-                passage: Aethelgard_Passage,
-                explanation: "'Were' (past simple of 'to be') is used because the passage refers to a past belief about inhabitants of an ancient city."
+                answer: 1, passage: Aethelgard_Passage, explanation: "'Were' (past simple of 'to be') is used because the passage refers to a past belief about inhabitants of an ancient city."
             },
-            {
+            { // Question 6 - Uses Aethelgard_Passage
                 question: "They were also renowned for their astronomical knowledge, supposedly able _____ (6) predict celestial events with uncanny accuracy.",
                 options: ["predict", "predicting", "to predict", "predicted"],
-                answer: 2,
-                passage: Aethelgard_Passage,
-                explanation: "After 'able', we use the infinitive form 'to predict'."
+                answer: 2, passage: Aethelgard_Passage, explanation: "After 'able', we use the infinitive form 'to predict'."
             },
             {
                 question: "The flight was delayed due to bad weather, _____ caused a lot of inconvenience for passengers.",
                 options: ["who", "that", "which", "what"],
-                answer: 2,
-                passage: null,
-                explanation: "'Which' is used to introduce a non-defining relative clause referring to the whole previous clause (the flight being delayed)."
+                answer: 2, passage: null, explanation: "'Which' is used to introduce a non-defining relative clause referring to the whole previous clause (the flight being delayed)."
             },
             {
                 question: "The chef prepared the delicate dessert _____ to ensure it looked perfect.",
                 options: ["careful", "care", "carefully", "more careful"],
-                answer: 2,
-                passage: null,
-                explanation: "'Carefully' is an adverb of manner that describes how the chef prepared the dessert."
+                answer: 2, passage: null, explanation: "'Carefully' is an adverb of manner that describes how the chef prepared the dessert."
             },
             {
                 question: "_____ you ever visited the new museum in the city center?",
                 options: ["Do", "Are", "Have", "Did"],
-                answer: 2,
-                passage: null,
-                explanation: "'Have' is used to form the present perfect tense ('Have you ever visited...'), which asks about experiences up to now."
+                answer: 2, passage: null, explanation: "'Have' is used to form the present perfect tense ('Have you ever visited...'), which asks about experiences up to now."
             },
             {
                 question: "Our grandparents _____ tell us fascinating stories every evening, but now they live too far away.",
                 options: ["used to", "are used to", "use to", "were using to"],
-                answer: 0,
-                passage: null,
-                explanation: "'Used to' indicates a past habit that is no longer true."
+                answer: 0, passage: null, explanation: "'Used to' indicates a past habit that is no longer true."
             },
-            {
+            { // Question 11 - Uses UrbanGardening_Passage
                 question: "City dwellers are increasingly interested in (11)_____ their own food, transforming balconies and rooftops into green spaces.",
                 options: ["grow", "to grow", "growing", "grown"],
-                answer: 2,
-                passage: UrbanGardening_Passage,
-                explanation: "After the preposition 'in' (in 'interested in'), we use a gerund ('growing')."
+                answer: 2, passage: UrbanGardening_Passage, explanation: "After the preposition 'in' (in 'interested in'), we use a gerund ('growing')."
             },
-            {
+            { // Question 12 - Uses UrbanGardening_Passage
                 question: "This trend not only provides fresh produce but also helps (12)_____ a connection with nature amidst concrete jungles.",
                 options: ["foster", "fostering", "to fostering", "fostered"],
-                answer: 0,
-                passage: UrbanGardening_Passage,
-                explanation: "The verb 'help' can be followed by an infinitive with 'to' (to foster) or without 'to' (foster)."
+                answer: 0, passage: UrbanGardening_Passage, explanation: "The verb 'help' can be followed by an infinitive with 'to' (to foster) or without 'to' (foster)."
             },
-            {
+            { // Question 13 - Uses UrbanGardening_Passage
                 question: "Many communities are now organizing workshops (13)_____ residents with the necessary skills.",
                 options: ["equip", "to equip", "equipping", "equipped"],
-                answer: 1,
-                passage: UrbanGardening_Passage,
-                explanation: "The infinitive 'to equip' is used here to express the purpose of the workshops."
+                answer: 1, passage: UrbanGardening_Passage, explanation: "The infinitive 'to equip' is used here to express the purpose of the workshops."
             },
             {
                 question: "While the children _____ in the park, it suddenly _____ to rain heavily.",
                 options: ["played / was starting", "were playing / started", "had played / started", "play / start"],
-                answer: 1,
-                passage: null,
-                explanation: "'Were playing' (past continuous) describes an ongoing action in the past that was interrupted by another action 'started' (past simple)."
+                answer: 1, passage: null, explanation: "'Were playing' (past continuous) describes an ongoing action in the past that was interrupted by another action 'started' (past simple)."
             },
             {
                 question: "Which sentence uses a countable noun correctly?",
-                options: [
-                    "She showed great courages during the difficult time.",
-                    "He offered me some good advices.",
-                    "There are several new students in our class this year.",
-                    "We need to buy new furnitures for the living room."
-                ],
-                answer: 2,
-                passage: null,
-                explanation: "'Students' is a countable noun, and 'several' is an appropriate quantifier. 'Courage', 'advice', and 'furniture' are uncountable."
+                options: ["She showed great courages during the difficult time.", "He offered me some good advices.", "There are several new students in our class this year.", "We need to buy new furnitures for the living room."],
+                answer: 2, passage: null, explanation: "'Students' is a countable noun, and 'several' is an appropriate quantifier. 'Courage', 'advice', and 'furniture' are uncountable."
             },
             {
                 question: "Which of these nouns is generally uncountable?",
                 options: ["Bottle", "Happiness", "Journey", "Report"],
-                answer: 1,
-                passage: null,
-                explanation: "'Happiness' is an abstract noun and is generally uncountable. 'Bottle', 'journey', and 'report' are countable."
+                answer: 1, passage: null, explanation: "'Happiness' is an abstract noun and is generally uncountable. 'Bottle', 'journey', and 'report' are countable."
             },
             {
                 question: "Which sentence uses a quantifier correctly?",
-                options: [
-                    "There isn't many traffics on the road today.",
-                    "Can I have a few water, please?",
-                    "She has made a lot of progress in her studies.",
-                    "He ate too much cookies after dinner."
-                ],
-                answer: 2,
-                passage: null,
-                explanation: "'Progress' is uncountable, so 'a lot of' is correct. 'Traffic' is uncountable (use 'much'). 'Water' is uncountable (use 'a little'). 'Cookies' are countable (use 'many')."
+                options: ["There isn't many traffics on the road today.", "Can I have a few water, please?", "She has made a lot of progress in her studies.", "He ate too much cookies after dinner."],
+                answer: 2, passage: null, explanation: "'Progress' is uncountable, so 'a lot of' is correct. 'Traffic' is uncountable (use 'much'). 'Water' is uncountable (use 'a little'). 'Cookies' are countable (use 'many')."
             },
             {
                 question: "She _____ like spicy food when she was a child, but now she loves it.",
                 options: ["didn't used to", "didn't use to", "not used to", "wasn't use to"],
-                answer: 1,
-                passage: null,
-                explanation: "For the negative form of 'used to', we use 'didn't use to' (without the 'd' in 'use')."
+                answer: 1, passage: null, explanation: "For the negative form of 'used to', we use 'didn't use to' (without the 'd' in 'use')."
             },
             {
                 question: "_____ you _____ live in this neighborhood before moving here?",
                 options: ["Did / used to", "Did / use to", "Were / used to", "Do / use to"],
-                answer: 1,
-                passage: null,
-                explanation: "For questions with 'used to', we use 'Did [subject] use to...?' (without the 'd' in 'use')."
+                answer: 1, passage: null, explanation: "For questions with 'used to', we use 'Did [subject] use to...?' (without the 'd' in 'use')."
             },
             {
                 question: "They decided _____ a new car after their old one broke down.",
                 options: ["buying", "to buy", "buy", "for buying"],
-                answer: 1,
-                passage: null,
-                explanation: "The verb 'decide' is followed by an infinitive (to + verb)."
+                answer: 1, passage: null, explanation: "The verb 'decide' is followed by an infinitive (to + verb)."
             },
             {
                 question: "My father enjoys _____ detective novels in his free time.",
                 options: ["to read", "read", "reading", "for read"],
-                answer: 2,
-                passage: null,
-                explanation: "The verb 'enjoy' is followed by a gerund (verb + -ing)."
+                answer: 2, passage: null, explanation: "The verb 'enjoy' is followed by a gerund (verb + -ing)."
             },
             {
                 question: "He is very good _____ solving complex mathematical problems.",
                 options: ["at", "to", "for", "on"],
-                answer: 0,
-                passage: null,
-                explanation: "The phrase 'good at' is followed by a gerund (verb + -ing). 'Solving' is the gerund here."
+                answer: 0, passage: null, explanation: "The phrase 'good at' is followed by a gerund (verb + -ing). 'Solving' is the gerund here."
             },
             {
                 question: "That's the artist _____ paintings are displayed in the gallery.",
                 options: ["who", "which", "whom", "whose"],
-                answer: 3,
-                passage: null,
-                explanation: "'Whose' is a relative pronoun used to show possession (the artist's paintings)."
+                answer: 3, passage: null, explanation: "'Whose' is a relative pronoun used to show possession (the artist's paintings)."
             },
             {
                 question: "This is the park _____ we often have picnics on sunny days.",
                 options: ["which", "that", "where", "who"],
-                answer: 2,
-                passage: null,
-                explanation: "'Where' is a relative pronoun used to refer to a place (the park)."
+                answer: 2, passage: null, explanation: "'Where' is a relative pronoun used to refer to a place (the park)."
             },
             {
                 question: "By the time the guests arrived, she _____ all the preparations for the party.",
                 options: ["finished", "was finishing", "had finished", "finishes"],
-                answer: 2,
-                passage: null,
-                explanation: "The past perfect tense ('had finished') is used to describe an action completed before another action in the past (guests arrived)."
+                answer: 2, passage: null, explanation: "The past perfect tense ('had finished') is used to describe an action completed before another action in the past (guests arrived)."
             },
             {
                 question: "I _____ to Paris last year, but I _____ to Rome yet.",
                 options: ["went / haven't been", "have gone / didn't go", "went / wasn't", "was going / haven't been"],
-                answer: 0,
-                passage: null,
-                explanation: "'Went' (past simple) is used for a completed action at a specific time in the past ('last year'). 'Haven't been' (present perfect) is used for an action that hasn't happened up to now ('yet')."
+                answer: 0, passage: null, explanation: "'Went' (past simple) is used for a completed action at a specific time in the past ('last year'). 'Haven't been' (present perfect) is used for an action that hasn't happened up to now ('yet')."
             },
             {
                 question: "Look at those dark clouds! I think it _____ soon.",
                 options: ["is raining", "will rain", "rains", "rained"],
-                answer: 1,
-                passage: null,
-                explanation: "'Will rain' (future simple) is used to make a prediction based on present evidence (dark clouds)."
+                answer: 1, passage: null, explanation: "'Will rain' (future simple) is used to make a prediction based on present evidence (dark clouds)."
             },
             {
                 question: "The students listened _____ to the teacher's instructions.",
                 options: ["attentive", "attention", "attentively", "more attentive"],
-                answer: 2,
-                passage: null,
-                explanation: "'Attentively' is an adverb of manner that describes how the students listened."
+                answer: 2, passage: null, explanation: "'Attentively' is an adverb of manner that describes how the students listened."
             },
             {
                 question: "She needs _____ sugar for her tea, but only _____ biscuits.",
                 options: ["a little / a few", "a few / a little", "many / much", "much / many"],
-                answer: 0,
-                passage: null,
-                explanation: "'A little' is used with uncountable nouns (like sugar), and 'a few' is used with countable nouns (like biscuits)."
+                answer: 0, passage: null, explanation: "'A little' is used with uncountable nouns (like sugar), and 'a few' is used with countable nouns (like biscuits)."
             },
-            {
+            { // Question 30
                 question: "Could I have _____ water and _____ apples, please?",
                 options: ["any / any", "some / some", "much / many", "a little / a few"],
-                answer: 1,
-                passage: null,
-                explanation: "'Some' can be used with both uncountable nouns (like water) and plural countable nouns (like apples) in requests and affirmative sentences."
+                answer: 1, passage: null, explanation: "'Some' can be used with both uncountable nouns (like water) and plural countable nouns (like apples) in requests and affirmative sentences."
+            },
+            
+            // --- 5 Essay Questions ---
+            {
+                type: 'essay',
+                prompt: "Write about your favorite hobby. Describe what it is, why you enjoy it, and how often you do it. (Write at least 5 sentences)",
+                modelAnswer: "My favorite hobby is reading books. I love exploring different worlds and characters through stories. Reading helps me relax and also learn new things. I usually read for about an hour every evening before I go to sleep, and sometimes more on weekends. It's a wonderful way to escape and use my imagination.",
+                checklist: [
+                    "Did I clearly state my favorite hobby?",
+                    "Did I describe what the hobby involves?",
+                    "Did I explain at least two reasons why I enjoy it?",
+                    "Did I mention how often or when I do this hobby?",
+                    "Is my answer at least 5 sentences long?",
+                    "Did I check my spelling and grammar?"
+                ],
+                passage: null
+            },
+            {
+                type: 'essay',
+                prompt: "Think about a holiday or a trip you really enjoyed. Where did you go? What did you do there? Explain why it was so enjoyable for you. (Write at least 5 sentences)",
+                modelAnswer: "A holiday I really enjoyed was my trip to the beach last year with my family. We went to Kuta Beach in Bali. We swam in the ocean, built sandcastles, and watched beautiful sunsets. It was so enjoyable because I love the water, and it was fun to spend quality time with my family, laughing and playing together. The warm weather and the sound of the waves were also very relaxing.",
+                checklist: [
+                    "Did I mention the place I went for the holiday/trip?",
+                    "Did I describe at least two activities I did there?",
+                    "Did I explain clearly why the holiday/trip was enjoyable for me?",
+                    "Did I use descriptive words to make my experience interesting?",
+                    "Is my answer at least 5 sentences long?",
+                    "Did I check my spelling and grammar?"
+                ],
+                passage: null
+            },
+            {
+                type: 'essay',
+                prompt: "Write three sentences using countable nouns with appropriate quantifiers (e.g., many, a few, several, two). Then, write two sentences using uncountable nouns with appropriate quantifiers (e.g., much, a little, some, a lot of).",
+                modelAnswer: "Countable:\n1. There are many students in the library today.\n2. I bought a few apples from the market.\n3. She has three new pens in her pencil case.\n\nUncountable:\n1. I don't have much time to finish the project.\n2. Could I have a little water, please?",
+                checklist: [
+                    "Did I write three complete sentences for countable nouns?",
+                    "Did I use an appropriate quantifier for each countable noun sentence?",
+                    "Did I write two complete sentences for uncountable nouns?",
+                    "Did I use an appropriate quantifier for each uncountable noun sentence?",
+                    "Are all sentences grammatically correct and clearly show countable/uncountable use?"
+                ],
+                passage: null
+            },
+            {
+                type: 'essay',
+                prompt: "In your own words, explain what an adjective is. Then, provide three examples of adjectives and use each one in a simple sentence.",
+                modelAnswer: "An adjective is a word that describes or gives more information about a noun or a pronoun. It tells us more about its qualities, characteristics, or state.\n\nExamples:\n1. Happy: The happy dog wagged its tail.\n2. Big: We live in a big house.\n3. Red: She wore a beautiful red dress.",
+                checklist: [
+                    "Did I explain what an adjective is in my own words?",
+                    "Does my explanation mention that adjectives describe nouns or pronouns?",
+                    "Did I provide three different adjectives as examples?",
+                    "Did I use each of my example adjectives correctly in a separate, simple sentence?",
+                    "Did I check my spelling and grammar?"
+                ],
+                passage: null
+            },
+            {
+                type: 'essay',
+                prompt: "Write three sentences using 'used to'. One sentence should be positive, one negative, and one interrogative (a question).",
+                modelAnswer: "1. Positive: I used to play basketball when I was in elementary school.\n2. Negative: He didn't use to like vegetables, but now he does.\n3. Interrogative: Did you use to live in this city?",
+                checklist: [
+                    "Did I write a correct positive sentence using 'used to'?",
+                    "Did I write a correct negative sentence using 'didn't use to'?",
+                    "Did I write a correct interrogative sentence using 'Did [subject] use to...'?",
+                    "Are all three sentences grammatically correct?",
+                    "Did I check my spelling?"
+                ],
+                passage: null
             }
         ];
+        
+        const mcqCount = questions.filter(q => q.type !== 'essay').length;
 
-        // --- DOM Elements ---
         const passageArea = document.getElementById('passage-area');
         const passageTextEl = document.getElementById('passage-text');
         const progressTextEl = document.getElementById('progress-text');
         const questionTextEl = document.getElementById('question-text');
         const optionsContainerEl = document.getElementById('options-container');
-        const feedbackTextEl = document.getElementById('feedback-text');
+        const feedbackAreaEl = document.getElementById('feedback-area'); // Main container for feedback
+        const feedbackTextEl = document.getElementById('feedback-text'); // For "Correct/Incorrect"
         const submitButton = document.getElementById('submit-button');
         const nextButton = document.getElementById('next-button');
         const scoreAreaEl = document.getElementById('score-area');
-        const scoreTextEl = document.getElementById('score-text');
-        const percentageTextEl = document.getElementById('percentage-text');
+        const mcrScoreTextEl = document.getElementById('mcr-score-text');
+        const mcrPercentageTextEl = document.getElementById('mcr-percentage-text');
         const restartButton = document.getElementById('restart-button');
         const questionAreaEl = document.getElementById('question-area');
         const navigationAreaEl = document.getElementById('navigation-area');
         const progressBarEl = document.getElementById('progress-bar');
 
-
-        // --- Quiz State ---
         let currentQuestionIndex = 0;
         let score = 0;
         let selectedOptionButton = null;
+        let essayTextarea = null;
 
-        // --- Functions ---
         function updateProgressBar() {
-            // Ensure questions array is not empty to avoid division by zero
-            if (questions.length === 0) {
-                progressBarEl.style.width = '0%';
-                return;
-            }
+            if (questions.length === 0) { progressBarEl.style.width = '0%'; return; }
             const progressPercentage = ((currentQuestionIndex + 1) / questions.length) * 100;
             progressBarEl.style.width = `${progressPercentage}%`;
         }
 
         function loadQuestion() {
             selectedOptionButton = null;
+            essayTextarea = null;
             submitButton.disabled = true;
-            feedbackTextEl.innerHTML = ''; 
-            feedbackTextEl.className = 'font-medium'; 
+            feedbackAreaEl.innerHTML = '<p id="feedback-text" class="font-medium"></p>'; // Reset feedback area
+            // Re-fetch feedbackTextEl as its parent's innerHTML was changed
+            const newFeedbackTextEl = document.getElementById('feedback-text');
+
 
             const currentQuestion = questions[currentQuestionIndex];
 
+            passageArea.style.display = currentQuestion.passage ? 'block' : 'none';
             if (currentQuestion.passage) {
                 passageTextEl.textContent = currentQuestion.passage;
-                passageArea.style.display = 'block';
-            } else {
-                passageArea.style.display = 'none';
             }
 
-            progressTextEl.textContent = `Question ${currentQuestionIndex + 1} of ${questions.length}`;
-            questionTextEl.textContent = currentQuestion.question;
+            progressTextEl.textContent = `Item ${currentQuestionIndex + 1} of ${questions.length}`;
+            questionTextEl.textContent = currentQuestion.type === 'essay' ? currentQuestion.prompt : currentQuestion.question;
             optionsContainerEl.innerHTML = ''; 
 
-            currentQuestion.options.forEach((option, index) => {
-                const button = document.createElement('button');
-                button.textContent = option;
-                button.classList.add('option-button', 'w-full', 'text-left', 'p-3', 'sm:p-3.5', 'text-sm', 'sm:text-base', 'border-slate-300', 'rounded-lg', 'hover:bg-slate-100', 'focus:outline-none');
-                button.dataset.index = index;
-                button.addEventListener('click', () => selectOption(button, index));
-                optionsContainerEl.appendChild(button);
-            });
+            if (currentQuestion.type === 'essay') {
+                const label = document.createElement('label');
+                label.htmlFor = 'essay-answer';
+                label.className = 'block text-sm font-medium text-slate-700 mb-1';
+                label.textContent = "Type your answer below:";
+                
+                essayTextarea = document.createElement('textarea');
+                essayTextarea.id = 'essay-answer';
+                essayTextarea.className = 'essay-textarea';
+                essayTextarea.rows = 8;
+                essayTextarea.addEventListener('input', () => {
+                    submitButton.disabled = essayTextarea.value.trim() === '';
+                });
+                optionsContainerEl.appendChild(label);
+                optionsContainerEl.appendChild(essayTextarea);
+                submitButton.disabled = true; 
+            } else { // MCQ
+                currentQuestion.options.forEach((option, index) => {
+                    const button = document.createElement('button');
+                    button.textContent = option;
+                    button.classList.add('option-button', 'w-full', 'text-left', 'p-3', 'sm:p-3.5', 'text-sm', 'sm:text-base', 'border-slate-300'); // Removed rounded-lg here as it's in base style
+                    button.dataset.index = index;
+                    button.addEventListener('click', () => selectMCQOption(button, index));
+                    optionsContainerEl.appendChild(button);
+                });
+            }
 
             submitButton.style.display = 'block';
             nextButton.style.display = 'none';
-            enableOptionButtons();
-            // Update progress bar correctly on load, including the first question
+            enableInteraction();
             updateProgressBar(); 
         }
 
-        function selectOption(button, index) {
+        function selectMCQOption(button, index) {
             if (submitButton.style.display === 'none') return; 
-
             if (selectedOptionButton) {
-                selectedOptionButton.classList.remove('selected', 'bg-blue-100', 'border-blue-500');
+                selectedOptionButton.classList.remove('selected');
             }
             selectedOptionButton = button;
-            selectedOptionButton.classList.add('selected', 'bg-blue-100', 'border-blue-500');
+            selectedOptionButton.classList.add('selected');
             submitButton.disabled = false;
         }
 
         function handleSubmit() {
-            if (!selectedOptionButton) return;
-
-            const selectedAnswerIndex = parseInt(selectedOptionButton.dataset.index);
             const currentQuestion = questions[currentQuestionIndex];
-            const correctAnswerIndex = currentQuestion.answer;
+            disableInteraction();
+            
+            // Always get a fresh reference to feedbackTextEl in case feedbackAreaEl was cleared
+            const currentFeedbackTextEl = document.getElementById('feedback-text'); 
 
-            disableOptionButtons(); 
+            if (currentQuestion.type === 'essay') {
+                currentFeedbackTextEl.innerHTML = `<p class="text-blue-600 font-medium mb-3 text-sm sm:text-base">Answer Submitted. Please review the model answer and checklist below to self-assess your writing.</p>`;
+                
+                const feedbackContainer = document.createElement('div');
+                feedbackContainer.className = 'essay-feedback-container';
+                feedbackContainer.innerHTML = `
+                    <div>
+                        <h4>Model Answer:</h4>
+                        <p class="whitespace-pre-line">${currentQuestion.modelAnswer}</p>
+                    </div>
+                    <div>
+                        <h4>Self-Checklist:</h4>
+                        <ul>${currentQuestion.checklist.map(item => `<li>${item}</li>`).join('')}</ul>
+                    </div>`;
+                feedbackAreaEl.appendChild(feedbackContainer); // Append to main feedback area
+            } else { // MCQ
+                if (!selectedOptionButton) return;
+                const selectedAnswerIndex = parseInt(selectedOptionButton.dataset.index);
+                const correctAnswerIndex = currentQuestion.answer;
+                let feedbackMessage = '';
 
-            let feedbackMessage = '';
-            if (selectedAnswerIndex === correctAnswerIndex) {
-                score++;
-                selectedOptionButton.classList.remove('selected', 'bg-blue-100', 'border-blue-500');
-                selectedOptionButton.classList.add('correct');
-                feedbackMessage = 'Correct!';
-                feedbackTextEl.className = 'font-medium text-green-600 text-sm sm:text-base'; // Added responsive text size
-            } else {
-                selectedOptionButton.classList.remove('selected', 'bg-blue-100', 'border-blue-500');
-                selectedOptionButton.classList.add('incorrect');
-                if (optionsContainerEl.children[correctAnswerIndex]) {
-                     optionsContainerEl.children[correctAnswerIndex].classList.add('correct');
+                if (selectedAnswerIndex === correctAnswerIndex) {
+                    score++;
+                    selectedOptionButton.classList.remove('selected');
+                    selectedOptionButton.classList.add('correct');
+                    feedbackMessage = 'Correct!';
+                    currentFeedbackTextEl.className = 'font-medium text-green-600 text-sm sm:text-base';
+                } else {
+                    selectedOptionButton.classList.remove('selected');
+                    selectedOptionButton.classList.add('incorrect');
+                    // Ensure optionsContainerEl.children[correctAnswerIndex] exists before adding class
+                    if (optionsContainerEl.children[correctAnswerIndex]) {
+                         optionsContainerEl.children[correctAnswerIndex].classList.add('correct');
+                    }
+                    feedbackMessage = `Incorrect. The correct answer was: "${currentQuestion.options[correctAnswerIndex]}"`;
+                    currentFeedbackTextEl.className = 'font-medium text-red-600 text-sm sm:text-base';
                 }
-                feedbackMessage = `Incorrect. The correct answer was: "${currentQuestion.options[correctAnswerIndex]}"`;
-                feedbackTextEl.className = 'font-medium text-red-600 text-sm sm:text-base'; // Added responsive text size
-            }
-
-            feedbackTextEl.innerHTML = feedbackMessage; 
-
-            const explanation = currentQuestion.explanation;
-            if (explanation) {
-                // The explanation span itself has styling, including font size.
-                feedbackTextEl.innerHTML += `<span class="explanation-text">${explanation}</span>`;
+                currentFeedbackTextEl.innerHTML = feedbackMessage;
+                if (currentQuestion.explanation) {
+                    const explanationSpan = document.createElement('span');
+                    explanationSpan.className = 'mcq-explanation-text';
+                    explanationSpan.textContent = currentQuestion.explanation;
+                    currentFeedbackTextEl.appendChild(explanationSpan); // Append explanation to the p#feedback-text
+                }
             }
 
             submitButton.style.display = 'none';
             nextButton.style.display = 'block';
-            // Progress bar is updated on load of next question or here if preferred.
-            // updateProgressBar(); // Already called in loadQuestion for the next one.
-
             if (currentQuestionIndex === questions.length - 1) {
-                nextButton.textContent = 'Show Score';
+                nextButton.textContent = 'Show Results';
             }
         }
 
         function handleNext() {
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.length) {
-                loadQuestion(); // This will call updateProgressBar
+                loadQuestion();
             } else {
-                showScore();
+                showResults();
             }
         }
 
-        function disableOptionButtons() {
-            Array.from(optionsContainerEl.children).forEach(button => {
-                button.disabled = true;
-                button.classList.remove('hover:bg-slate-100'); 
-            });
-        }
-
-        function enableOptionButtons() {
-             Array.from(optionsContainerEl.children).forEach(button => {
-                button.disabled = false;
-                // Re-add hover effect if it was removed, though current logic doesn't remove it from non-disabled
-                if (!button.classList.contains('hover:bg-slate-100')) {
-                    button.classList.add('hover:bg-slate-100');
+        function disableInteraction() {
+            if (essayTextarea) {
+                essayTextarea.disabled = true;
+            }
+            Array.from(optionsContainerEl.children).forEach(element => {
+                if(element.tagName === 'BUTTON') {
+                    element.disabled = true;
+                    element.classList.remove('hover:bg-slate-100', 'hover:border-blue-400'); 
                 }
             });
         }
 
-        function showScore() {
+        function enableInteraction() {
+            if (essayTextarea) {
+                essayTextarea.disabled = false;
+            }
+            Array.from(optionsContainerEl.children).forEach(element => {
+                if(element.tagName === 'BUTTON') {
+                    element.disabled = false;
+                    // Re-add hover effects if necessary, though Tailwind handles this if not overridden
+                }
+            });
+        }
+
+        function showResults() {
             questionAreaEl.style.display = 'none';
             navigationAreaEl.style.display = 'none';
-            feedbackTextEl.style.display = 'none';
+            feedbackAreaEl.style.display = 'none'; // Hide entire feedback area
             passageArea.style.display = 'none';
             document.querySelector('.progress-bar-container').style.display = 'none'; 
             scoreAreaEl.style.display = 'block';
 
-            const percentage = ((score / questions.length) * 100).toFixed(1);
-            scoreTextEl.textContent = `Your Score: ${score} out of ${questions.length}`;
-            percentageTextEl.textContent = `Well done! You scored ${percentage}%`;
+            const percentage = mcqCount > 0 ? ((score / mcqCount) * 100).toFixed(1) : 0;
+            mcrScoreTextEl.textContent = `Multiple Choice Score: ${score} out of ${mcqCount}`;
+            mcrPercentageTextEl.textContent = mcqCount > 0 ? `You scored ${percentage}% on the multiple-choice section.` : "No multiple-choice questions were present.";
         }
 
         function restartQuiz() {
             currentQuestionIndex = 0;
             score = 0;
             questionAreaEl.style.display = 'block';
-            navigationAreaEl.style.display = 'flex'; // Keep as flex for alignment
-            feedbackTextEl.style.display = 'block'; 
+            navigationAreaEl.style.display = 'flex';
+            feedbackAreaEl.style.display = 'block'; 
+            feedbackAreaEl.innerHTML = '<p id="feedback-text" class="font-medium"></p>'; // Reset feedback area
             scoreAreaEl.style.display = 'none';
             document.querySelector('.progress-bar-container').style.display = 'block'; 
-            // progressBarEl.style.width = '0%'; // loadQuestion will call updateProgressBar which sets it
             nextButton.textContent = 'Next Question'; 
-            loadQuestion(); // This will call updateProgressBar
+            loadQuestion();
         }
 
-        // --- Event Listeners ---
         submitButton.addEventListener('click', handleSubmit);
         nextButton.addEventListener('click', handleNext);
         restartButton.addEventListener('click', restartQuiz);
 
-        // --- Initial Load ---
-        loadQuestion(); // This will call updateProgressBar
+        loadQuestion();
     </script>
-
 </body>
 </html>
