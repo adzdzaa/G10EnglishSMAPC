@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>7th Grade English Review (MCQ & Essays)</title>
+    <title>7th Grade English Review (MCQ & Refined Essays)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -132,7 +132,8 @@
 </head>
 <body class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6">
 
-    <div id="quiz-container" class="quiz-card p-5 sm:p-8 w-full max-w-2xl"> <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-center text-slate-800 mb-2">7th Grade English Review</h1>
+    <div id="quiz-container" class="quiz-card p-5 sm:p-8 w-full max-w-2xl">
+        <h1 class="text-xl sm:text-2xl md:text-3xl font-bold text-center text-slate-800 mb-2">7th Grade English Review</h1>
         <p class="text-center text-sm text-slate-500 mb-6">Test your knowledge & practice writing!</p>
 
         <div class="progress-bar-container">
@@ -147,10 +148,12 @@
         <div id="question-area">
             <p id="progress-text" class="text-xs sm:text-sm text-slate-500 mb-2 text-right"></p>
             <h2 id="question-text" class="text-md sm:text-lg font-semibold text-slate-800 mb-4 min-h-[3em] sm:min-h-[2.5em] leading-snug"></h2>
-            <div id="options-container" class="space-y-3 sm:space-y-4 mt-2"> </div>
+            <div id="options-container" class="space-y-3 sm:space-y-4 mt-2">
+                </div>
         </div>
 
-        <div id="feedback-area" class="mt-5 text-sm py-1"> <p id="feedback-text" class="font-medium"></p>
+        <div id="feedback-area" class="mt-5 text-sm py-1">
+            <p id="feedback-text" class="font-medium"></p>
             </div>
 
         <div id="navigation-area" class="mt-6 sm:mt-8 flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
@@ -177,7 +180,7 @@ Deep within the Whispering Woods, legend spoke of Aethelgard, a city _____ (4) v
 In recent years, urban gardening has seen a significant surge in popularity. City dwellers are increasingly interested in (11)_____ their own food, transforming balconies and rooftops into green spaces. This trend not only provides fresh produce but also helps (12)_____ a connection with nature amidst concrete jungles. Many communities are now organizing workshops (13)_____ residents with the necessary skills.`;
 
         const questions = [
-            // --- Restored 30 MCQ Questions ---
+            // --- 30 MCQ Questions (Same as previous version) ---
             {
                 question: "My brother _____ play the guitar every day when he was younger, but now he prefers the piano.",
                 options: ["uses to", "used to", "is using", "use to"],
@@ -193,17 +196,17 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
                 options: ["who", "that", "where", "when"],
                 answer: 1, passage: null, explanation: "'That' (or 'which') is a relative pronoun used to introduce a clause giving more information about a thing (the smartphone)."
             },
-            { // Question 4 - Uses Aethelgard_Passage
+            { 
                 question: "Deep within the Whispering Woods, legend spoke of Aethelgard, a city _____ (4) vanished centuries ago.",
                 options: ["who", "which", "where", "whose"],
                 answer: 1, passage: Aethelgard_Passage, explanation: "'Which' is used as a relative pronoun to refer to things (the city)."
             },
-            { // Question 5 - Uses Aethelgard_Passage
+            { 
                 question: "Archaeologists believed its inhabitants _____ (5) master builders, erecting structures that defied the engineering of their time.",
                 options: ["are", "were", "will be", "be"],
                 answer: 1, passage: Aethelgard_Passage, explanation: "'Were' (past simple of 'to be') is used because the passage refers to a past belief about inhabitants of an ancient city."
             },
-            { // Question 6 - Uses Aethelgard_Passage
+            { 
                 question: "They were also renowned for their astronomical knowledge, supposedly able _____ (6) predict celestial events with uncanny accuracy.",
                 options: ["predict", "predicting", "to predict", "predicted"],
                 answer: 2, passage: Aethelgard_Passage, explanation: "After 'able', we use the infinitive form 'to predict'."
@@ -228,17 +231,17 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
                 options: ["used to", "are used to", "use to", "were using to"],
                 answer: 0, passage: null, explanation: "'Used to' indicates a past habit that is no longer true."
             },
-            { // Question 11 - Uses UrbanGardening_Passage
+            { 
                 question: "City dwellers are increasingly interested in (11)_____ their own food, transforming balconies and rooftops into green spaces.",
                 options: ["grow", "to grow", "growing", "grown"],
                 answer: 2, passage: UrbanGardening_Passage, explanation: "After the preposition 'in' (in 'interested in'), we use a gerund ('growing')."
             },
-            { // Question 12 - Uses UrbanGardening_Passage
+            { 
                 question: "This trend not only provides fresh produce but also helps (12)_____ a connection with nature amidst concrete jungles.",
                 options: ["foster", "fostering", "to fostering", "fostered"],
                 answer: 0, passage: UrbanGardening_Passage, explanation: "The verb 'help' can be followed by an infinitive with 'to' (to foster) or without 'to' (foster)."
             },
-            { // Question 13 - Uses UrbanGardening_Passage
+            { 
                 question: "Many communities are now organizing workshops (13)_____ residents with the necessary skills.",
                 options: ["equip", "to equip", "equipping", "equipped"],
                 answer: 1, passage: UrbanGardening_Passage, explanation: "The infinitive 'to equip' is used here to express the purpose of the workshops."
@@ -323,77 +326,78 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
                 options: ["a little / a few", "a few / a little", "many / much", "much / many"],
                 answer: 0, passage: null, explanation: "'A little' is used with uncountable nouns (like sugar), and 'a few' is used with countable nouns (like biscuits)."
             },
-            { // Question 30
+            { 
                 question: "Could I have _____ water and _____ apples, please?",
                 options: ["any / any", "some / some", "much / many", "a little / a few"],
                 answer: 1, passage: null, explanation: "'Some' can be used with both uncountable nouns (like water) and plural countable nouns (like apples) in requests and affirmative sentences."
             },
             
-            // --- 5 Essay Questions ---
+            // --- 5 REFINED Essay Questions ---
             {
                 type: 'essay',
-                prompt: "Write about your favorite hobby. Describe what it is, why you enjoy it, and how often you do it. (Write at least 5 sentences)",
-                modelAnswer: "My favorite hobby is reading books. I love exploring different worlds and characters through stories. Reading helps me relax and also learn new things. I usually read for about an hour every evening before I go to sleep, and sometimes more on weekends. It's a wonderful way to escape and use my imagination.",
+                prompt: "Describe your favorite book, movie, or game. What is it about? Why do you like it so much? Mention at least two specific reasons. (Write at least 5 sentences)",
+                modelAnswer: "My favorite movie is 'Spider-Man: Into the Spider-Verse'. It's an animated superhero film about Miles Morales becoming Spider-Man. I love it so much because the animation style is incredibly unique and visually stunning. Another reason is the great story about finding your own path and the importance of friendship and family. The music is also fantastic and fits the movie perfectly.",
                 checklist: [
-                    "Did I clearly state my favorite hobby?",
-                    "Did I describe what the hobby involves?",
-                    "Did I explain at least two reasons why I enjoy it?",
-                    "Did I mention how often or when I do this hobby?",
+                    "Did I clearly name my favorite book, movie, or game?",
+                    "Did I briefly explain what it is about?",
+                    "Did I give at least two specific reasons why I like it?",
+                    "Are my reasons clearly explained?",
                     "Is my answer at least 5 sentences long?",
-                    "Did I check my spelling and grammar?"
+                    "Did I check for spelling and grammar mistakes?"
                 ],
                 passage: null
             },
             {
                 type: 'essay',
-                prompt: "Think about a holiday or a trip you really enjoyed. Where did you go? What did you do there? Explain why it was so enjoyable for you. (Write at least 5 sentences)",
-                modelAnswer: "A holiday I really enjoyed was my trip to the beach last year with my family. We went to Kuta Beach in Bali. We swam in the ocean, built sandcastles, and watched beautiful sunsets. It was so enjoyable because I love the water, and it was fun to spend quality time with my family, laughing and playing together. The warm weather and the sound of the waves were also very relaxing.",
+                prompt: "Write about a memorable event or celebration you attended (e.g., a birthday party, a school festival, a family gathering). What happened during the event? What made it memorable for you? (Write at least 5 sentences)",
+                modelAnswer: "A memorable event I attended was my cousin's birthday party last year. It was held at a park, and there were many fun games like a treasure hunt and a three-legged race. We also had a delicious barbecue. What made it memorable for me was seeing all my cousins together and playing so happily. My aunt also baked a huge, amazing cake that everyone loved.",
                 checklist: [
-                    "Did I mention the place I went for the holiday/trip?",
-                    "Did I describe at least two activities I did there?",
-                    "Did I explain clearly why the holiday/trip was enjoyable for me?",
-                    "Did I use descriptive words to make my experience interesting?",
+                    "Did I clearly state the memorable event or celebration?",
+                    "Did I describe what happened during the event (activities, food, etc.)?",
+                    "Did I explain what made the event memorable for me personally?",
+                    "Did I use descriptive language to make the event sound interesting?",
                     "Is my answer at least 5 sentences long?",
-                    "Did I check my spelling and grammar?"
+                    "Did I check for spelling and grammar errors?"
                 ],
                 passage: null
             },
             {
                 type: 'essay',
-                prompt: "Write three sentences using countable nouns with appropriate quantifiers (e.g., many, a few, several, two). Then, write two sentences using uncountable nouns with appropriate quantifiers (e.g., much, a little, some, a lot of).",
-                modelAnswer: "Countable:\n1. There are many students in the library today.\n2. I bought a few apples from the market.\n3. She has three new pens in her pencil case.\n\nUncountable:\n1. I don't have much time to finish the project.\n2. Could I have a little water, please?",
+                prompt: "Imagine you are packing your school bag for tomorrow. Describe what you put inside. Use at least two countable nouns with quantifiers (e.g., three pens, some books) and at least two uncountable nouns with quantifiers (e.g., a little water, some homework).",
+                modelAnswer: "Tomorrow, I'm packing my school bag carefully. I'll put in three notebooks for my classes and several textbooks. I also need to pack some homework that is due. For lunch, I'll take a little fruit juice and a sandwich. I must not forget my pencil case which has many pens and a few erasers.",
                 checklist: [
-                    "Did I write three complete sentences for countable nouns?",
-                    "Did I use an appropriate quantifier for each countable noun sentence?",
-                    "Did I write two complete sentences for uncountable nouns?",
-                    "Did I use an appropriate quantifier for each uncountable noun sentence?",
-                    "Are all sentences grammatically correct and clearly show countable/uncountable use?"
+                    "Did I describe items I would put in a school bag?",
+                    "Did I use at least two countable nouns with suitable quantifiers?",
+                    "Are the countable noun sentences grammatically correct?",
+                    "Did I use at least two uncountable nouns with suitable quantifiers?",
+                    "Are the uncountable noun sentences grammatically correct?",
+                    "Does my description make sense?"
                 ],
                 passage: null
             },
             {
                 type: 'essay',
-                prompt: "In your own words, explain what an adjective is. Then, provide three examples of adjectives and use each one in a simple sentence.",
-                modelAnswer: "An adjective is a word that describes or gives more information about a noun or a pronoun. It tells us more about its qualities, characteristics, or state.\n\nExamples:\n1. Happy: The happy dog wagged its tail.\n2. Big: We live in a big house.\n3. Red: She wore a beautiful red dress.",
+                prompt: "Think of a place you know well (like your bedroom, a park, or a classroom). Describe this place using at least five different adjectives. After your description, list the five adjectives you used.",
+                modelAnswer: "My bedroom is my favorite place. It's a cozy room with bright yellow walls. There's a large window that lets in a lot of natural light, and I have a comfortable bed with soft pillows. On my desk, I keep my colorful collection of storybooks.\n\nAdjectives used: cozy, bright, yellow, large, natural, comfortable, soft, colorful.",
                 checklist: [
-                    "Did I explain what an adjective is in my own words?",
-                    "Does my explanation mention that adjectives describe nouns or pronouns?",
-                    "Did I provide three different adjectives as examples?",
-                    "Did I use each of my example adjectives correctly in a separate, simple sentence?",
-                    "Did I check my spelling and grammar?"
+                    "Did I choose a specific place to describe?",
+                    "Did I use at least five different adjectives in my description?",
+                    "Does my description give a clear picture of the place?",
+                    "Did I list the adjectives I used after the description?",
+                    "Is my description and list grammatically correct and well-spelled?"
                 ],
                 passage: null
             },
             {
                 type: 'essay',
-                prompt: "Write three sentences using 'used to'. One sentence should be positive, one negative, and one interrogative (a question).",
-                modelAnswer: "1. Positive: I used to play basketball when I was in elementary school.\n2. Negative: He didn't use to like vegetables, but now he does.\n3. Interrogative: Did you use to live in this city?",
+                prompt: "Think about how your daily routine or your neighborhood has changed compared to a few years ago. Write three sentences describing these changes using 'used to' (one positive, one negative, and one question about a past habit).",
+                modelAnswer: "Positive: My neighborhood used to have a small bakery on the corner, which smelled wonderful.\nNegative: I didn't use to wake up so early for school when I was younger.\nQuestion: Did there use to be more trees in the park across the street?",
                 checklist: [
-                    "Did I write a correct positive sentence using 'used to'?",
-                    "Did I write a correct negative sentence using 'didn't use to'?",
-                    "Did I write a correct interrogative sentence using 'Did [subject] use to...'?",
-                    "Are all three sentences grammatically correct?",
-                    "Did I check my spelling?"
+                    "Did I write a correct positive sentence using 'used to' describing a past state/habit?",
+                    "Did I write a correct negative sentence using 'didn't use to' describing a past state/habit?",
+                    "Did I write a correct question using 'Did... use to...' about a past state/habit?",
+                    "Do my sentences reflect a change from the past to the present?",
+                    "Are all sentences grammatically correct and well-spelled?"
                 ],
                 passage: null
             }
@@ -406,8 +410,8 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
         const progressTextEl = document.getElementById('progress-text');
         const questionTextEl = document.getElementById('question-text');
         const optionsContainerEl = document.getElementById('options-container');
-        const feedbackAreaEl = document.getElementById('feedback-area'); // Main container for feedback
-        const feedbackTextEl = document.getElementById('feedback-text'); // For "Correct/Incorrect"
+        const feedbackAreaEl = document.getElementById('feedback-area');
+        // feedbackTextEl will be the <p> tag created dynamically inside feedbackAreaEl
         const submitButton = document.getElementById('submit-button');
         const nextButton = document.getElementById('next-button');
         const scoreAreaEl = document.getElementById('score-area');
@@ -433,11 +437,9 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
             selectedOptionButton = null;
             essayTextarea = null;
             submitButton.disabled = true;
-            feedbackAreaEl.innerHTML = '<p id="feedback-text" class="font-medium"></p>'; // Reset feedback area
-            // Re-fetch feedbackTextEl as its parent's innerHTML was changed
-            const newFeedbackTextEl = document.getElementById('feedback-text');
-
-
+            // Clear the entire feedback area and recreate the base <p> for feedback text
+            feedbackAreaEl.innerHTML = '<p id="feedback-text" class="font-medium"></p>'; 
+            
             const currentQuestion = questions[currentQuestionIndex];
 
             passageArea.style.display = currentQuestion.passage ? 'block' : 'none';
@@ -469,7 +471,7 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
                 currentQuestion.options.forEach((option, index) => {
                     const button = document.createElement('button');
                     button.textContent = option;
-                    button.classList.add('option-button', 'w-full', 'text-left', 'p-3', 'sm:p-3.5', 'text-sm', 'sm:text-base', 'border-slate-300'); // Removed rounded-lg here as it's in base style
+                    button.classList.add('option-button', 'w-full', 'text-left', 'p-3', 'sm:p-3.5', 'text-sm', 'sm:text-base', 'border-slate-300');
                     button.dataset.index = index;
                     button.addEventListener('click', () => selectMCQOption(button, index));
                     optionsContainerEl.appendChild(button);
@@ -496,15 +498,14 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
             const currentQuestion = questions[currentQuestionIndex];
             disableInteraction();
             
-            // Always get a fresh reference to feedbackTextEl in case feedbackAreaEl was cleared
-            const currentFeedbackTextEl = document.getElementById('feedback-text'); 
+            const currentFeedbackTextEl = document.getElementById('feedback-text'); // Get the fresh p tag
 
             if (currentQuestion.type === 'essay') {
                 currentFeedbackTextEl.innerHTML = `<p class="text-blue-600 font-medium mb-3 text-sm sm:text-base">Answer Submitted. Please review the model answer and checklist below to self-assess your writing.</p>`;
                 
-                const feedbackContainer = document.createElement('div');
-                feedbackContainer.className = 'essay-feedback-container';
-                feedbackContainer.innerHTML = `
+                const essayFeedbackDiv = document.createElement('div');
+                essayFeedbackDiv.className = 'essay-feedback-container';
+                essayFeedbackDiv.innerHTML = `
                     <div>
                         <h4>Model Answer:</h4>
                         <p class="whitespace-pre-line">${currentQuestion.modelAnswer}</p>
@@ -513,9 +514,10 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
                         <h4>Self-Checklist:</h4>
                         <ul>${currentQuestion.checklist.map(item => `<li>${item}</li>`).join('')}</ul>
                     </div>`;
-                feedbackAreaEl.appendChild(feedbackContainer); // Append to main feedback area
+                // Append the essay feedback div AFTER the initial "Answer Submitted" message, which is inside currentFeedbackTextEl's parent (feedbackAreaEl)
+                feedbackAreaEl.appendChild(essayFeedbackDiv);
             } else { // MCQ
-                if (!selectedOptionButton) return;
+                if (!selectedOptionButton) return; // Should not happen if button is enabled
                 const selectedAnswerIndex = parseInt(selectedOptionButton.dataset.index);
                 const correctAnswerIndex = currentQuestion.answer;
                 let feedbackMessage = '';
@@ -529,19 +531,19 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
                 } else {
                     selectedOptionButton.classList.remove('selected');
                     selectedOptionButton.classList.add('incorrect');
-                    // Ensure optionsContainerEl.children[correctAnswerIndex] exists before adding class
                     if (optionsContainerEl.children[correctAnswerIndex]) {
                          optionsContainerEl.children[correctAnswerIndex].classList.add('correct');
                     }
                     feedbackMessage = `Incorrect. The correct answer was: "${currentQuestion.options[correctAnswerIndex]}"`;
                     currentFeedbackTextEl.className = 'font-medium text-red-600 text-sm sm:text-base';
                 }
-                currentFeedbackTextEl.innerHTML = feedbackMessage;
-                if (currentQuestion.explanation) {
+                currentFeedbackTextEl.innerHTML = feedbackMessage; // Set "Correct/Incorrect"
+                
+                if (currentQuestion.explanation) { // Append explanation to the same <p>
                     const explanationSpan = document.createElement('span');
                     explanationSpan.className = 'mcq-explanation-text';
                     explanationSpan.textContent = currentQuestion.explanation;
-                    currentFeedbackTextEl.appendChild(explanationSpan); // Append explanation to the p#feedback-text
+                    currentFeedbackTextEl.appendChild(explanationSpan);
                 }
             }
 
@@ -577,10 +579,9 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
             if (essayTextarea) {
                 essayTextarea.disabled = false;
             }
-            Array.from(optionsContainerEl.children).forEach(element => {
+             Array.from(optionsContainerEl.children).forEach(element => {
                 if(element.tagName === 'BUTTON') {
                     element.disabled = false;
-                    // Re-add hover effects if necessary, though Tailwind handles this if not overridden
                 }
             });
         }
@@ -588,7 +589,7 @@ In recent years, urban gardening has seen a significant surge in popularity. Cit
         function showResults() {
             questionAreaEl.style.display = 'none';
             navigationAreaEl.style.display = 'none';
-            feedbackAreaEl.style.display = 'none'; // Hide entire feedback area
+            feedbackAreaEl.style.display = 'none'; 
             passageArea.style.display = 'none';
             document.querySelector('.progress-bar-container').style.display = 'none'; 
             scoreAreaEl.style.display = 'block';
